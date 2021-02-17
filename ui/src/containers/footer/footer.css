@@ -1,0 +1,8 @@
+.footer-wrapper{
+    width: 100%;
+    background: var(--main-purple);
+    color: #fff;
+    padding: 10px 5px;
+    text-align: center;
+    margin-top: 25px;
+}

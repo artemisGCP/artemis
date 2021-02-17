@@ -1,0 +1,20 @@
+.header {
+    background: var(--main-purple);
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    padding: 15px;
+}
+.nav-links {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+.nav-link-item {
+    margin-right: 20px;
+    cursor: pointer;
+}
+.nav-link-item:hover {
+    color: #ccc;
+}
