@@ -53,6 +53,7 @@
     "react": "^16.7.0",
     "react-bootstrap": "^0.33.1",
     "react-dom": "^16.7.0",
+    "react-responsive-carousel": "^3.2.12",
     "react-router-dom": "^4.3.1",
     "url-search-params": "^1.1.0",
     "whatwg-fetch": "^3.5.0"

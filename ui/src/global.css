@@ -27,3 +27,12 @@ html body{
 .hide-overlay{
     opacity: 0; /* Hidden by default */
 }
+
+h1 {
+    margin-left: 20px;
+}
+
+h2, p {
+    margin-left: 20px;
+}
+
