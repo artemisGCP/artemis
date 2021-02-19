@@ -1,0 +1,61 @@
+
+.carousel-image {
+    width: 70px;
+}
+
+.header-wrapper {
+    display: flex;
+}
+
+.header-title {
+    flex: 1;
+    justify-content: center;
+}
+
+.launch-app-button {
+    margin: auto;
+    margin-right: 100px;
+    justify-content: center;
+    background-color: maroon;
+    padding: 10px;
+    color: white;
+}
+
+.launch-app-button:hover {
+    background-color: rgb(165, 4, 4);
+}
+
+h1 {
+    text-align: center;
+    margin:30px;
+    font-family: Proxima Nova Light, sans-serif;
+    font-weight: 400;
+}
+
+h2 {
+    text-align: center;
+    font-family: Proxima Nova Light,sans-serif;
+    font-weight: 400;
+}
+
+h3 {
+    color: grey;
+    text-align: center;
+    font-family: Proxima Nova Light,sans-serif;
+    font-weight: 400;
+}
+
+p {
+    text-align: center;
+    margin-left: 90px;
+    margin-right: 90px;
+    padding: 10px;
+    font-family: Proxima Nova Light,sans-serif;
+    font-weight: 400;
+}
+
+.image-carousel-div {
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+}
