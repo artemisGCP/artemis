@@ -1,0 +1,69 @@
+.home {
+  width: 80vw;
+  margin: auto;
+}
+.home > .part-1 {
+  display: flex;
+  justify-content: space-between;
+}
+.home > .part-1 .title {
+  font-weight: 500;
+}
+.home > .part-1 .sub-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+.home > .part-1 > .button {
+  background: #e68a72;
+  font-weight: 500;
+  border-radius: 10px;
+  margin-top: 9px;
+}
+.home > .part-1 > .button.ant-btn:hover,
+.button.ant-btn:focus {
+  color: #000;
+  background: #e68a72;
+  border-color: #e68a72;
+}
+.home > .part-2 {
+  margin-top: 8px;
+}
+.home > .part-2 img {
+  object-fit: contain;
+  height: 30vh;
+}
+.home > .part-2 .slick-next:before,
+.slick-prev:before {
+  font-size: 40px;
+  color: #dcc2c2;
+}
+.home > .part-2 .slick-next {
+  right: -45px;
+}
+.home > .part-2 .slick-prev {
+  left: -45px;
+}
+
+.home > .part-3 {
+  margin-top: 30px;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.home > .part-3 div {
+  display: flex;
+  justify-content: space-between;
+}
+.home > .part-3 div span {
+  width: 48%;
+  border: 1px solid #f0f0f0;
+  padding: 8px 12px;
+}
+.home > .part-3 div span i {
+  font-style: unset;
+  display: block;
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
