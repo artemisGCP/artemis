@@ -14,7 +14,8 @@
 .head .ant-menu {
   background: #2950b8;
   color: #dcdcdc;
-  font-weight: 400;
+  font-weight: 500;
+  font-size: 16px;
 }
 .head .ant-menu-horizontal {
   border-bottom: none;
@@ -39,13 +40,6 @@
   border-bottom: none;
 }
 
-.head .login {
-  height: 46px;
-  color: #dcdcdc;
-}
-.head .login:hover {
-  color: #fff;
-}
 .head .left {
   display: flex;
 }

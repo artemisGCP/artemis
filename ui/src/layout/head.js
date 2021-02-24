@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Menu, message } from 'antd';
+import { Menu } from 'antd';
 import { useHistory } from 'react-router-dom';
 import logo from '../static/logo.png';
 import './head.css';
@@ -11,9 +11,6 @@ const Head = () => {
   const handleClick = (e) => {
     setCurrent(e.key);
     history.push(e.key);
-  };
-  const login = () => {
-    message.success('login !');
   };
 
   useEffect(() => {
@@ -38,9 +35,9 @@ const Head = () => {
           <Menu.Item key="contact">Contact</Menu.Item>
         </Menu>
       </div>
-      <Button type="text" className="login" onClick={login}>
-        Login
-      </Button>
+      <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+        <Menu.Item key="login">Login</Menu.Item>
+      </Menu>
     </div>
   );
 };

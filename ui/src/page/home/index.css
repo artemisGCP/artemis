@@ -7,11 +7,12 @@
   justify-content: space-between;
 }
 .home > .part-1 .title {
-  font-weight: 500;
+  font-size: 21px;
+  font-weight: 800;
 }
 .home > .part-1 .sub-title {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 500;
 }
 .home > .part-1 > .button {
   background: #e68a72;
@@ -30,7 +31,7 @@
 }
 .home > .part-2 img {
   object-fit: contain;
-  height: 30vh;
+  height: 400px;
 }
 .home > .part-2 .slick-next:before,
 .slick-prev:before {
@@ -45,8 +46,7 @@
 }
 
 .home > .part-3 {
-  margin-top: 30px;
-  height: 700px;
+  padding-top: 50px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -54,16 +54,30 @@
 .home > .part-3 div {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 .home > .part-3 div span {
-  width: 48%;
-  border: 1px solid #f0f0f0;
-  padding: 8px 12px;
+  width: 49.5%;
+  height: 300px;
+  /* border: 1px solid #f0f0f0; */
+  padding: 0px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
+
 .home > .part-3 div span i {
   font-style: unset;
   display: block;
   text-align: center;
   font-weight: 700;
-  margin-bottom: 4px;
+  font-size: 30px;
+}
+.home > .part-3 div span p {
+  font-size: 17px;
+  text-align: justify;
+}
+.home > .part-3 div span img {
+  height: 300px;
+  object-fit: cover;
 }
