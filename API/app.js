@@ -6,7 +6,9 @@ var logger = require('morgan');
 var cors = require('cors');
 require("dotenv").config();
 
-var indexRouter = require('./controllers/pages/index');
+const connectToDb = require('./db.js');
+
+var indexRouter = require('./src/controllers/pages/index');
 //var loginRouter = require('./controllers/pages/login');
 
 var app = express();
@@ -43,3 +45,7 @@ if (process.env.NODE_ENV !== "test") {
 }
 
 module.exports = app;
+
+/* Things to add.
+1. during server activation, you are going to want to call a function that connects to the 
+mongo db. If this fails you will want to call an error. I made the connect function "connectToDb". You can put this in asycn function. Use an async function with try and catch block
