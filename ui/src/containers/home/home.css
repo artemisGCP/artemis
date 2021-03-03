@@ -7,18 +7,19 @@
   justify-content: space-between;
 }
 .home > .part-1 .title {
-  font-size: 21px;
+  font-size: 30px;
   font-weight: 800;
 }
 .home > .part-1 .sub-title {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 500;
 }
 .home > .part-1 > .button {
   background: #e68a72;
   font-weight: 500;
   border-radius: 10px;
-  margin-top: 9px;
+  margin-top: 15px;
+  font-size: 17px;
 }
 .home > .part-1 > .button.ant-btn:hover,
 .button.ant-btn:focus {
@@ -71,7 +72,7 @@
   display: block;
   text-align: center;
   font-weight: 700;
-  font-size: 30px;
+  font-size: 25px;
 }
 .home > .part-3 div span p {
   font-size: 17px;

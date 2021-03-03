@@ -1,6 +1,6 @@
+import React from 'react';
 import { Input, Form, Button } from 'antd';
 import { InstagramFilled, LinkedinFilled, FacebookFilled, GooglePlusSquareFilled, TwitterSquareFilled, HeartOutlined, EnvironmentOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
-import React from 'react';
 import './contact.css';
 
 const Contact = () => {

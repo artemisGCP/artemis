@@ -1,9 +1,7 @@
 import React from 'react';
-import { HashRouter as Router } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import Body from './router.js';
 import Head from '../src/components/navbar/head.jsx';
-import Home from '../src/containers/home/home.jsx';
 
 import './global.css';
 

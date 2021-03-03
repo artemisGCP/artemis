@@ -5,22 +5,29 @@ import logo from '../../assets/logo.png';
 import './head.css';
 
 const Head = () => {
+  const history = useHistory();
   const [current, setCurrent] = useState('');
 
-  const history = useHistory();
   const handleClick = (e) => {
-    setCurrent(e.key);
     history.push(e.key);
   };
 
   useEffect(() => {
-    let init = history.location.pathname;
-    if (init === '/') {
-      setCurrent('home');
-    } else {
-      setCurrent(init.substr(1));
-    }
-  }, [history]);
+    const setPath = () => {
+      let init = history.location.pathname;
+      if (init === '/') {
+        setCurrent('home');
+      } else {
+        setCurrent(init.substr(1));
+      }
+    };
+
+    history.listen(() => {
+      setPath();
+    });
+
+    setPath();
+  }, []);
 
   return (
     <div className="head">
