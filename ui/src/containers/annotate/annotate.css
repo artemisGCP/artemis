@@ -80,7 +80,7 @@
 }
 
 .annotation1 {
-    background-color: grey;
+    background-color: rgb(184, 171, 171);
     width: 600px;
     height: 30px;
     z-index: 10;
@@ -93,7 +93,11 @@
 .hoverImage {
     /* max-width: 100%;
     height: auto; */
+    position: relative;
+    top: 100px;
+    left: 0;
     z-index: 99;
+    width: 400px;
 }
 
 

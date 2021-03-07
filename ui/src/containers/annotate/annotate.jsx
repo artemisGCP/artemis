@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import './annotate.css';
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import resting from '../../assets/resting.jpg';
-import logo from '../../assets/logo.png';
+import eating from '../../assets/eating.jpg';
+import eathand from '../../assets/eathand.jpg';
+import sniffing from '../../assets/sniffing.jpg';
+import grooming from '../../assets/grooming.jpg';
+import hanging from '../../assets/hanging.jpg';
+import walking from '../../assets/walking.jpg';
+import drinking from '../../assets/drinking.jpg';
+import rearing from '../../assets/rearing.jpg';
 
 
 const Annotate = () => {
@@ -10,14 +17,14 @@ const Annotate = () => {
     const [imgSource, setImgSource] = useState('');
     const annotations = [
         { "text": "resting", "color": "purple", "img": resting },
-        { "text": "eating", "color": "red", "img": logo },
-        { "text": "ETH", "color": "yellow" },
-        { "text": "sniffing", "color": "green" },
-        { "text": "grooming", "color": "blue" },
-        { "text": "hanging", "color": "orange" },
-        { "text": "walking", "color": "pink" },
-        { "text": "drinking", "color": "maroon" },
-        { "text": "rearing", "color": "violet" }
+        { "text": "eating", "color": "red", "img": eating },
+        { "text": "ETH", "color": "yellow", "img": eathand },
+        { "text": "sniffing", "color": "green", "img": sniffing},
+        { "text": "grooming", "color": "blue", "img": grooming},
+        { "text": "hanging", "color": "orange", "img": hanging},
+        { "text": "walking", "color": "pink", "img": walking},
+        { "text": "drinking", "color": "maroon", "img": drinking},
+        { "text": "rearing", "color": "violet", "img": rearing}
     ];
 
     const displayImage = (annotation) => (event) => {
