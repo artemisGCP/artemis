@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 
-//Render homepage with index.html
+//Render login 
 router.get('/', function (req, res) {
     res.json({
         message: 'Success. You are viewing the login page'

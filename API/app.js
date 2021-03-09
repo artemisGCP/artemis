@@ -2,9 +2,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var createError = require('http-errors');
+var expressValidator = require("express-validator");
 var logger = require('morgan');
 var cors = require('cors');
+var session = require('express-session');
 require("dotenv").config();
+
+const SESSION_SECRET = 'secret'; // Move this to .env file
 
 var indexRouter = require('./controllers/pages/index');
 //var loginRouter = require('./controllers/pages/login');
@@ -18,6 +22,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
+
+//app.use(expressValidator());
+app.use(
+	session({
+		secret: SESSION_SECRET,
+		cookie: {},
+		resave: false, // This must be false. Interferes with concurrency.
+        saveUninitialized: true,
+        maxAge: 86400000, // Session expires after 24 hours
+	})
+);
+
 
 app.use('/', indexRouter);
 //app.use('/users', usersRouter);
