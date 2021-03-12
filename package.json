@@ -1,9 +1,0 @@
-{
-  "name": "autoplanet",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "start": "node ./index.js -s",
-    "install": "node ./index.js -i"
-  }
-}
