@@ -5,13 +5,18 @@
   "dependencies": {
     "antd": "^4.11.2",
     "babel-polyfill": "^6.26.0",
+    "cors": "^2.8.5",
     "dotenv": "^6.2.0",
+    "express-fileupload": "^1.2.1",
     "http-proxy-middleware": "^0.21.0",
+    "morgan": "^1.10.0",
     "nodemon": "^1.19.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-hook-form": "^6.15.4",
     "react-hover-image": "^2.0.1",
     "react-icons": "^4.2.0",
+    "react-player": "^2.9.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-slick": "^0.28.0"

@@ -18,9 +18,15 @@
     justify-content: space-between;
     align-items: center;
 }
-.blank {
+.fileuploads {
     height: 400px;
     width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    background-color: rgb(136, 117, 117);
+    padding-left: 40px;
 }
 
 .m {
@@ -87,8 +93,8 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+    padding: 0 15px 0 15px;
 }
-
 
 .hoverImage {
     /* max-width: 100%;
@@ -100,5 +106,8 @@
     width: 400px;
 }
 
+input[type='file'] {
+    color: rgba(0, 0, 0, 0)
+  }
 
 
