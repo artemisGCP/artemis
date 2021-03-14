@@ -111,3 +111,8 @@ input[type='file'] {
   }
 
 
+  .displayimage {
+      position: absolute;
+      z-index: 20;
+      top: 400px;
+  }

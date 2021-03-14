@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './annotate.css';
-import { BsFillQuestionCircleFill } from 'react-icons/bs';
+import { BsFillQuestionCircleFill, BsFillTrashFill } from 'react-icons/bs';
 import resting from '../../assets/resting.jpg';
 import eating from '../../assets/eating.jpg';
 import eathand from '../../assets/eathand.jpg';
@@ -13,12 +13,26 @@ import rearing from '../../assets/rearing.jpg';
 
 import { useForm } from 'react-hook-form'
 import ReactPlayer from 'react-player'
+import { Prompt } from 'react-router'
+import { message } from 'antd';
 
 
 const Annotate = () => {
     const [hover, setHover] = useState(false);
     const [imgSource, setImgSource] = useState('');
-    const annotations = [
+    const [behaviors, setBehaviors] = useState([
+        { "text": "resting", "color": "purple", "img": resting },
+        { "text": "eating", "color": "red", "img": eating },
+        { "text": "ETH", "color": "yellow", "img": eathand },
+        { "text": "sniffing", "color": "green", "img": sniffing },
+        { "text": "grooming", "color": "blue", "img": grooming },
+        { "text": "hanging", "color": "orange", "img": hanging },
+        { "text": "walking", "color": "pink", "img": walking },
+        { "text": "drinking", "color": "maroon", "img": drinking },
+        { "text": "rearing", "color": "violet", "img": rearing }
+    ]);
+
+    const initBehaviors = [
         { "text": "resting", "color": "purple", "img": resting },
         { "text": "eating", "color": "red", "img": eating },
         { "text": "ETH", "color": "yellow", "img": eathand },
@@ -30,10 +44,12 @@ const Annotate = () => {
         { "text": "rearing", "color": "violet", "img": rearing }
     ];
 
-    const displayImage = (annotation) => (event) => {
+    const [bList, setBList] = useState(false);
+
+    const displayImage = (behavior) => (event) => {
         console.log("display image");
         setHover(!hover);
-        setImgSource(annotation.img);
+        setImgSource(behavior.img);
     }
 
     // const { register, handleSubmit } = useForm()
@@ -61,24 +77,87 @@ const Annotate = () => {
         setVideoPlayed(value.played);
     };
 
-    const [behaviors, setBehaviors] = useState([]);
+    const deleteBehavior = (behavior) => async (event) => {
+        console.log("delete behavior");
+        // console.log(behavior);
+        var index = await behaviors.indexOf(behavior);
+        console.log(index);
+        await behaviors.splice(index, 1)
+        console.log(behaviors)
+        await setBehaviors(behaviors);
+        await setBList(true);
+        await setBList(false);
+
+    }
+
+    const [newBehavior, setNewBehavior] = useState(false);
+    const [addNB, setAddNB] = useState('');
+
+    const addNewBehavior = async () => {
+        console.log(addNB);
+        if (addNB) {
+            let inB = false;
+            if (behaviors.length > 0){
+                for (const b in behaviors) {
+                    if (behaviors[b].text.toLowerCase() === addNB.toLowerCase()) {
+                        inB = true;
+                    }
+                }
+            }
+
+            if (inB) {
+                setAddNB('');
+                console.log('already exist');
+            } 
+            else {
+                for (const b in initBehaviors) {
+                    if (initBehaviors[b].text.toLowerCase() === addNB.toLowerCase()) {
+                        await behaviors.push(initBehaviors[b]);
+                        inB = true;
+                    }
+                }
+                if (!inB) {
+                    await behaviors.push({
+                        "text": addNB, "color": "black", "img": ''
+                    });
+                }
+    
+                await setBehaviors(behaviors);
+                await setBList(true);
+                await setBList(false);
+                setAddNB('');
+            }
+        }
+        setNewBehavior(false);
+    }
+
+    // const [behaviors, setBehaviors] = useState([]);
+
 
     return (
         <div>
             <div className="annotate">
                 <div className="m"></div>
                 <div className="annotate1">
+
                     <div className="fileuploads">
                         <button>Summary</button>
                         <input type="file" onChange={handleVideoUpload} />
-                        <button>Add behavior</button>
-                        {hover && <img src={imgSource} className="hoverImage"></img>}
+                        {!newBehavior && <button onClick={() => setNewBehavior(!newBehavior)}>Add behavior</button>}
+                        {newBehavior &&
+                            <div>
+                                <input type="text" size="12" onInput={e => setAddNB(e.target.value)} />
+                                <button onClick={addNewBehavior}>Submit</button>
+                            </div>
+                        }
                     </div>
                     <div className="annotations">
-                        {annotations.map((annotation) => (
-                            <div className="annotation" key={annotation.text}>
-                                <BsFillQuestionCircleFill size={20} onMouseOver={displayImage(annotation)} onMouseOut={displayImage(annotation)} />
-                                <button className="annotation-button">{annotation.text}</button>
+                        {behaviors.map((behavior) => (
+                            <div className="annotation" key={behavior.text}>
+                                <BsFillTrashFill size={20} onClick={deleteBehavior(behavior)} />
+                                <button className="annotation-button" >{behavior.text}</button>
+                                <BsFillQuestionCircleFill size={20} onMouseOver={displayImage(behavior)} onMouseOut={displayImage(behavior)} />
+
                             </div>
                         ))}
                     </div>
@@ -88,9 +167,9 @@ const Annotate = () => {
                     <div className="video">
 
                         <ReactPlayer
-                            url={videoFilePath} 
-                            width="100%" 
-                            height="100%" 
+                            url={videoFilePath}
+                            width="100%"
+                            height="100%"
                             controls={true}
                             onProgress={(value) => setVideoPlayed(value['played'])}
                         />
@@ -102,11 +181,16 @@ const Annotate = () => {
 
                     </div>
                     <div className="annotations1">
-                        {annotations.map((annotation) => (
-                            <div className="annotation1" key={annotation.text}>
+                        {behaviors.map((behavior) => (
+                            <div className="annotation1" key={behavior.text}>
                                 {/* <progress max={1} value={videoPlayed} /> */}
                             </div>
                         ))}
+                    </div>
+
+                    <div className="displayimage">
+                        {hover && <img src={imgSource} className="hoverImage"></img>}
+
                     </div>
 
                 </div>
