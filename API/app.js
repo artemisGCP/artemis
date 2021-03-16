@@ -1,18 +1,29 @@
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var createError = require('http-errors');
 var logger = require('morgan');
 var cors = require('cors');
 require("dotenv").config();
 var {ApolloServer} = require('apollo-server-express');
+var {typeDefs, resolvers} = require('./schema');
 
-const connectToDb = require('./db.js');
+//const connectToDb = require('./db.js');
 
-var indexRouter = require('./src/controllers/pages/index');
+//var indexRouter = require('./src/controllers/pages/index');
 //var loginRouter = require('./controllers/pages/login');
 
 var app = express();
+var server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
+
+server.applyMiddleware({app});
+app.use((req, res) => {
+  res.status(200);
+  res.send("Hello!");
+  res.end();
+})
 app.use(cors())
 
 // view engine setup omitted
@@ -22,7 +33,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+//app.use('/', indexRouter);
 //app.use('/users', usersRouter);
 
 // error handler
@@ -40,13 +51,17 @@ app.use(function(err, req, res, next) {
  * Server Activation
  */
 if (process.env.NODE_ENV !== "test") {
-  app.listen(process.env.PORT || 8081, () =>
-    console.log("Server Running on :8081")
-  );
+  app.listen(process.env.PORT || 8081, () => {
+    console.log("Server Running on :8080")
+    console.log(`🚀 Graphql Server ready at http://localhost:8080${server.graphqlPath}`)
+  });
+
 }
+
 
 module.exports = app;
 
 /* Things to add.
 1. during server activation, you are going to want to call a function that connects to the 
 mongo db. If this fails you will want to call an error. I made the connect function "connectToDb". You can put this in asycn function. Use an async function with try and catch block
+*/
