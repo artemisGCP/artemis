@@ -7,6 +7,14 @@ require("dotenv").config();
 var {ApolloServer} = require('apollo-server-express');
 var {typeDefs, resolvers} = require('./schema');
 
+var {MongoClient} = require('mongodb');
+
+// Connection URI : Change this to what Jordan gives us
+const uri = 'mongodb+srv://tashakim:greenemu@autoba.pcfbm.mongodb.net/test'
+
+// Create a new MongoClient
+const client = new MongoClient(uri);
+
 //const connectToDb = require('./db.js');
 
 //var indexRouter = require('./src/controllers/pages/index');
@@ -58,6 +66,22 @@ if (process.env.NODE_ENV !== "test") {
 
 }
 
+// DB
+async function run() {
+  try {
+    // Connect mongoclient to server
+    await client.connect();
+    // Establish and verify connection
+    await client.db("admin").command({ping:1})
+    console.log("Connected successfully to server");
+  } finally {
+    // Ensure that client closes when you finish/error
+    await client.close();
+  }
+
+}
+
+run().catch(console.dir);
 
 module.exports = app;
 
