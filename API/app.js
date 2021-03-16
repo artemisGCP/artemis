@@ -1,19 +1,31 @@
 var express = require('express');
-var path = require('path');
 var cookieParser = require('cookie-parser');
-var createError = require('http-errors');
 var expressValidator = require("express-validator");
 var logger = require('morgan');
 var cors = require('cors');
 var session = require('express-session');
 require("dotenv").config();
+var {ApolloServer} = require('apollo-server-express');
+var {typeDefs, resolvers} = require('./schema');
+var {MongoClient} = require('mongodb');
+
+// Create a new MongoClient
+//const client = new MongoClient(uri);
 
 const SESSION_SECRET = 'secret'; // Move this to .env file
 
-var indexRouter = require('./controllers/pages/index');
-//var loginRouter = require('./controllers/pages/login');
-
 var app = express();
+var server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
+
+server.applyMiddleware({app});
+app.use((req, res) => {
+  res.status(200);
+  res.send("Hello!");
+  res.end();
+})
 app.use(cors())
 
 // view engine setup omitted
@@ -35,9 +47,6 @@ app.use(
 );
 
 
-app.use('/', indexRouter);
-//app.use('/users', usersRouter);
-
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -53,9 +62,33 @@ app.use(function(err, req, res, next) {
  * Server Activation
  */
 if (process.env.NODE_ENV !== "test") {
-  app.listen(process.env.PORT || 8081, () =>
-    console.log("Server Running on :8081")
-  );
+  app.listen(process.env.PORT || 8081, () => {
+    console.log("Server Running on :8080")
+    console.log(`🚀 Graphql Server ready at http://localhost:8080${server.graphqlPath}`)
+  });
+
 }
 
+// DB
+const connectToDb = require('./models/db.js');
+
+async function run() {
+  try {
+    // Connect mongoclient to server
+    connectToDb();
+    console.log("DB Connected successfully to server");
+  } finally {
+    // Ensure that client closes when you finish/error
+    console.error("DB Connection failed");
+  }
+
+}
+
+run().catch(console.dir);
+
 module.exports = app;
+
+/* Things to add.
+1. during server activation, you are going to want to call a function that connects to the 
+mongo db. If this fails you will want to call an error. I made the connect function "connectToDb". You can put this in asycn function. Use an async function with try and catch block
+*/
