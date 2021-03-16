@@ -10,12 +10,10 @@ var {typeDefs, resolvers} = require('./schema');
 var {MongoClient} = require('mongodb');
 
 // Connection URI : Change this to what Jordan gives us
-const uri = 'mongodb+srv://tashakim:greenemu@autoba.pcfbm.mongodb.net/test'
+//const uri = 'mongodb+srv://tashakim:greenemu@autoba.pcfbm.mongodb.net/test'
 
 // Create a new MongoClient
-const client = new MongoClient(uri);
-
-//const connectToDb = require('./db.js');
+//const client = new MongoClient(uri);
 
 //var indexRouter = require('./src/controllers/pages/index');
 //var loginRouter = require('./controllers/pages/login');
@@ -67,16 +65,16 @@ if (process.env.NODE_ENV !== "test") {
 }
 
 // DB
+const connectToDb = require('./models/db.js');
+
 async function run() {
   try {
     // Connect mongoclient to server
-    await client.connect();
-    // Establish and verify connection
-    await client.db("admin").command({ping:1})
-    console.log("Connected successfully to server");
+    connectToDb();
+    console.log("DB Connected successfully to server");
   } finally {
     // Ensure that client closes when you finish/error
-    await client.close();
+    console.error("DB Connection failed");
   }
 
 }
