@@ -1,22 +1,18 @@
 var express = require('express');
-var path = require('path');
 var cookieParser = require('cookie-parser');
+var expressValidator = require("express-validator");
 var logger = require('morgan');
 var cors = require('cors');
+var session = require('express-session');
 require("dotenv").config();
 var {ApolloServer} = require('apollo-server-express');
 var {typeDefs, resolvers} = require('./schema');
-
 var {MongoClient} = require('mongodb');
-
-// Connection URI : Change this to what Jordan gives us
-//const uri = 'mongodb+srv://tashakim:greenemu@autoba.pcfbm.mongodb.net/test'
 
 // Create a new MongoClient
 //const client = new MongoClient(uri);
 
-//var indexRouter = require('./src/controllers/pages/index');
-//var loginRouter = require('./controllers/pages/login');
+const SESSION_SECRET = 'secret'; // Move this to .env file
 
 var app = express();
 var server = new ApolloServer({
@@ -39,8 +35,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use('/', indexRouter);
-//app.use('/users', usersRouter);
+//app.use(expressValidator());
+app.use(
+	session({
+		secret: SESSION_SECRET,
+		cookie: {},
+		resave: false, // This must be false. Interferes with concurrency.
+        saveUninitialized: true,
+        maxAge: 86400000, // Session expires after 24 hours
+	})
+);
+
 
 // error handler
 app.use(function(err, req, res, next) {
