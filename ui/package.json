@@ -19,7 +19,8 @@
     "react-player": "^2.9.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
-    "react-slick": "^0.28.0"
+    "react-slick": "^0.28.0",
+    "react-timelines": "^2.6.1"
   },
   "scripts": {
     "start": "nodemon -w ./server/uiserver.js -w .env ./server/uiserver.js",

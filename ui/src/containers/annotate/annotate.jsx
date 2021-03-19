@@ -41,8 +41,8 @@ const Annotate = () => {
     ];
 
     const [annotations, setAnnotations] = useState([
-        { "text": "resting", "data": [] },
-        { "text": "eating", "data": [] },
+        { "text": "resting", "data": [[[0.2, 2.0], [0.4, 4.0]], [[0.6, 6.0], [0.7, 7.0]]]},
+        { "text": "eating", "data": [[[0.5, 5.0], [0.6, 6.0]]] },
         { "text": "ETH", "data": [] },
         { "text": "sniffing", "data": [] },
         { "text": "grooming", "data": [] },
@@ -209,13 +209,13 @@ const Annotate = () => {
                         if (behaviors[i].text === currKey) {
                             console.log("same key press")
                             console.log(`${videoPlayedSeconds}`);
-                            
+
                             // setEndTime([videoPlayed, videoPlayedSeconds]);
                             setCurrKeyState(false);
                             setCurrKey(null);
                             annotations[i].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
                             // setAnnotations(annotations);
-                        
+
                             setAnnotations(annotations);
                             console.log(annotations);
                         }
@@ -238,11 +238,11 @@ const Annotate = () => {
                         checked = true;
                         break;
                     }
-                    
+
                 }
             }
             if (checked === false) {
-                    // if currKeyState is true, press any key to stop
+                // if currKeyState is true, press any key to stop
                 if (currKeyState === true) {
                     console.log(videoPlayedSeconds);
                     // setEndTime([videoPlayed, videoPlayedSeconds]);
@@ -263,6 +263,29 @@ const Annotate = () => {
     }, [processKeyDown]);
     // const [behaviors, setBehaviors] = useState([]);
 
+    const [summary, setSummary] = useState(false);
+    // const [totalAnnotation, setTotalAnnotation] = useState(0)
+
+    const calculateSummary = (annotation) => {
+        let totalTime = 0;
+        for (const a of annotation.data){
+            totalTime = totalTime + a[1][0] - a[0][0];
+        }
+        // let a = totalAnnotation + totalTime;
+        // setTotalAnnotation(a);
+        return Math.round(totalTime * 100)
+    }
+
+    const totalAnnotation = () => {
+        let totalTime = 0;
+        for (const annotation of annotations) {
+            for (const a of annotation.data) {
+                totalTime = totalTime + a[1][0] - a[0][0];
+            }
+        }
+        return Math.round(totalTime * 100);
+    }
+
 
     return (
         <div>
@@ -272,7 +295,13 @@ const Annotate = () => {
                 <div className="annotate1">
 
                     <div className="fileuploads">
-                        <button>Summary</button>
+                        <button onClick={() => setSummary(!summary)}>Summary</button>
+                        {summary && <div>
+                           { annotations.map((annotation) => (
+                               <div>{annotation.text} : {calculateSummary(annotation)} %</div>
+                            ))}
+                            <div>total annotated: {totalAnnotation()} %</div>
+                        </div>}
                         <input type="file" onChange={handleVideoUpload} />
                         {!newBehavior && <button onClick={() => setNewBehavior(!newBehavior)}>Add behavior</button>}
                         {newBehavior &&
@@ -312,7 +341,12 @@ const Annotate = () => {
                     <div className="annotations1">
                         {behaviors.map((behavior) => (
                             <div className="annotation1" key={behavior.text}>
-                                <progress max={1} value={videoPlayed} />
+                                {/* {handleAnnotation(behavior).map((d) => (
+                                    <input type="range" min={d[0][0]} max={d[1][0]} />
+                                ))} */}
+                                {/* <progress max={1} value={videoPlayed} /> */}
+                                {/* <input id='a' type='range' min='-50' value='-30' max='50'/> */}
+                                
                             </div>
                         ))}
                     </div>
