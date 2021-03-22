@@ -80,7 +80,8 @@ const Annotate = () => {
     const handleVideoPlayed = (value) => {
         setVideoPlayed(value.played);
         setVideoPlayedSeconds(value.playedSeconds);
-        // console.log(videoPlayed, videoPlayedSeconds)
+        console.log(value);
+        console.log(videoPlayed, videoPlayedSeconds)
     };
 
     const allKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "q", "w", "e", "r", "a", "s", "d"]
@@ -89,10 +90,10 @@ const Annotate = () => {
         console.log("delete behavior");
         // console.log(behavior);
         var index = await behaviors.indexOf(behavior);
-        console.log(index);
+        // console.log(index);
         await behaviors.splice(index, 1)
         await annotations.splice(index, 1)
-        console.log(behaviors)
+        // console.log(behaviors)
         for (const i in behaviors) {
             behaviors[i].key = allKeys[i];
         }
@@ -107,7 +108,7 @@ const Annotate = () => {
     const [addNB, setAddNB] = useState('');
 
     const addNewBehavior = async () => {
-        console.log(addNB);
+        // console.log(addNB);
         if (addNB) {
             let inB = false;
             if (behaviors.length > 0) {
@@ -154,7 +155,7 @@ const Annotate = () => {
     }
 
     const pressOne = useKeyPress('a');
-    const [videoEnded, setVideoEnded] = useState(false);
+    const [videoLength, setVideoLength] = useState(0);
 
     const [currKey, setCurrKey] = useState(null);
     const [currKeyState, setCurrKeyState] = useState(false);
@@ -172,31 +173,66 @@ const Annotate = () => {
     const handleVideoEnd = async (a) => {
         if (currKeyState === true) {
             // await setEndTime([videoPlayed, videoPlayedSeconds]);
-            await annotations[getIndex(currKey)].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
+            await annotations[getIndex(currKey)].data.push([startTime, [1, videoLength]]);
             axios.post('/annotation', {
                 behavior: annotations[getIndex(currKey)].text,
                 start: startTime[1],
-                end: videoPlayedSeconds
+                end: videoLength
             }).then(res => {
                 console.log(res);
             })
             setAnnotations(annotations);
             setCurrKeyState(false);
             setCurrKey(null);
-            console.log(annotations);
-            console.log("video end")
+            // console.log(annotations);
+            // console.log("video end")
         }
     }
-    // useEffect(() => {
-    //     console.log(endTime);
-    // }, [])
+    useEffect(() => {
+        console.log('annotation updated');
+    }, [annotations])
+
+    const [focusedBehavior, setFocusedBehavior] = useState(null);
+
+    const handleBehaviors = (d) => {
+        // console.log(d.key);
+        setFocusedBehavior({ behavior: d.behavior, key: d.key })
+    }
 
     const processKeyDown = (e) => {
         // console.log(useKeyPress('a'))
         // console.log(e.key)
         let checked = false;
         if (e.key === "Delete" || e.key === "Backspace") {
-            console.log(e.key);
+            // console.log(e.key);
+            if (focusedBehavior) {
+                for (let annotation of annotations) {
+                    if (annotation.text === focusedBehavior.behavior) {
+                        annotation.data = annotation.data.sort(function (a, b) {
+                            return a[0][0] - b[0][0];
+                        });
+                        const index = (focusedBehavior.key - 1) / 2
+                        console.log(index);
+                        console.log(Number.isInteger(index))
+
+                        if (Number.isInteger(index)) {
+                            // console.log(annotation.text)
+                            // console.log(annotation.data[index])
+                            axios.delete('/annotation', {
+                                behavior: annotation.text,
+                                start: annotation.data[index][0][1],
+                                end: annotation.data[index][1][1]
+                            }).then(res => {
+                                console.log(res);
+                                
+                            })
+                            annotation.data.splice(index, 1);
+                        }
+                    }
+                }
+                setAnnotations(annotations);
+                setFocusedBehavior(null);
+            }
         }
         else if (!videoFilePath) {
             console.log("no video upload");
@@ -326,37 +362,39 @@ const Annotate = () => {
     const handleAnnotation = (behavior) => {
         for (const annotation of annotations) {
             if (behavior.text === annotation.text) {
-                let d = [0] 
+                let d = [0]
                 let e = []
-                let c = annotation.data.sort(function(a, b) {
+                let c = annotation.data.sort(function (a, b) {
                     return a[0][0] - b[0][0];
                 });
-                console.log(c);
+                // console.log(c);
                 for (const a of c) {
                     d.push(a[0][0])
                     d.push(a[1][0])
                     e.push(a[0][0])
                 }
-                console.log(d);
-                console.log(e);
+                // console.log(d);
+                // console.log(e);
                 d.push(1);
 
                 let f = false;
                 let g = [];
-                for (let i= 0; i < d.length - 1; i++) {
+                for (let i = 0; i < d.length - 1; i++) {
                     let color = 'danger';
                     if (!f) {
                         color = 'info';
                     }
-                    g.push({key: i, seg: Math.round((d[i+1]-d[i])*100), show: color});
+                    g.push({ behavior: behavior.text, key: i, seg: Math.round((d[i + 1] - d[i]) * 100), show: color });
                     f = !f;
                 }
                 return g;
 
-                console.log(g)
+                // console.log(g)
             }
         }
     }
+
+
 
 
     return (
@@ -400,13 +438,15 @@ const Annotate = () => {
                     <div className="video">
 
                         <ReactPlayer
+                            // ref={(e) => console.log(e.getDuration())}
                             url={videoFilePath}
                             width="100%"
                             height="100%"
                             controls={true}
                             // onProgress={(value) => setVideoPlayed(value['played'])}
-                            onProgress={handleVideoPlayed}
+                            onProgress={(value) => handleVideoPlayed(value)}
                             onEnded={handleVideoEnd}
+                            onDuration={(e) => setVideoLength(e)}
                         />
 
                     </div>
@@ -418,7 +458,7 @@ const Annotate = () => {
                                 ))} */}
                                 <ProgressBar>
                                     {handleAnnotation(behavior).map((d) => (
-                                        <ProgressBar onClick={() => console.log("clicked")} onKeyPress={(e) => console.log(e)} variant={d.show} now={d.seg} key={d.key}/>
+                                        <ProgressBar tabIndex="0" onFocus={() => handleBehaviors(d)} variant={d.show} now={d.seg} key={d.key} />
 
                                     ))}
                                 </ProgressBar>
