@@ -218,11 +218,11 @@ const Annotate = () => {
                         if (Number.isInteger(index)) {
                             // console.log(annotation.text)
                             // console.log(annotation.data[index])
-                            axios.delete('/annotation', {
+                            axios.delete('/annotation', { data: {
                                 behavior: annotation.text,
                                 start: annotation.data[index][0][1],
                                 end: annotation.data[index][1][1]
-                            }).then(res => {
+                            }}).then(res => {
                                 console.log(res);
                                 
                             })
