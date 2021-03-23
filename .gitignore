@@ -1,3 +1,5 @@
-ui/node_modules/
+client/node_modules/
+server/node_modules/
 node_modules
 .env
+client/src/components/auth/keys.js

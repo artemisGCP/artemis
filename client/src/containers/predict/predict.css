@@ -1,0 +1,52 @@
+.predict {
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: auto;
+}
+.predict img:first-child {
+  max-height: 244px;
+  object-fit: contain;
+}
+.predict_img2 {
+  max-height: 360px;
+}
+.predict_upload {
+  margin-top: 12px;
+  display: flex;
+}
+
+.predict_upload > span {
+  width: 50%;
+  text-align: center;
+}
+
+.predict_btn {
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  justify-content: space-between;
+}
+
+.predict_upload .ant-upload-list {
+  margin-top: 4px;
+  overflow: auto;
+}
+.predict_upload button {
+  font-size: 17px;
+  background: #c4c4c4;
+  color: #000;
+}
+.predict_upload button:hover,
+.predict_upload button:focus {
+  color: #000;
+  border-color: #c4c4c4;
+}
+.predict_model {
+  text-align: center;
+}
+.predict_model button {
+  font-size: 17px;
+  font-weight: 800;
+}

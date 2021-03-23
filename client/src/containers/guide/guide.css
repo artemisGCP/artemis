@@ -1,0 +1,75 @@
+.page-title {
+  font-size: 25px;
+  font-weight: 700;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.text-div {
+  font-size: 17px;
+  margin-bottom: 30px;
+  text-align: justify;
+}
+
+.guide {
+  width: 80vw;
+  margin: 8px auto;
+  text-align: left;
+}
+.guide h2 {
+  color: #1d1d1f;
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: 600;
+}
+
+.guide h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 0px;
+}
+.guide h4 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.guide p {
+  text-align: justify;
+  line-height: 20px;
+  font-size: 14px;
+}
+
+.guide .img {
+  text-align: center;
+  margin: 20px 0px;
+}
+
+.guide .upload {
+  margin-top: 10px;
+  display: flex;
+  height: 200px;
+}
+.guide .upload .left,
+.guide .upload .right {
+  width: 50%;
+  text-align: center;
+}
+.guide .ant-upload-list {
+  margin-top: 4px;
+  overflow: auto;
+  height: 125px;
+}
+
+.guide .upload div p {
+  text-align: center;
+}
+.guide .upload button {
+  background: #c4c4c4;
+  color: #000;
+}
+
+.guide .annotate-video {
+  margin-top: 10px;
+  text-align: center;
+  padding-bottom: 30px;
+}
