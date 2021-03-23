@@ -16,9 +16,14 @@ import useKeyPress from './useKeyPress.jsx'
 import axios from 'axios';
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Modal from 'react-modal';
 
 import ReactDOM from 'react-dom';
 import InputRange from 'react-input-range';
+import 'react-input-range/lib/css/index.css';
+
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 const Annotate = () => {
 
@@ -69,9 +74,12 @@ const Annotate = () => {
     }
 
     const [videoFilePath, setVideoPath] = useState(null);
+    const [videoID, setVideoID] = useState(null);
 
     const handleVideoUpload = (event) => {
         setVideoPath(URL.createObjectURL(event.target.files[0]));
+        // console.log(event.target.files[0].name);
+        setVideoID(event.target.files[0].name);
 
     };
 
@@ -175,6 +183,7 @@ const Annotate = () => {
             // await setEndTime([videoPlayed, videoPlayedSeconds]);
             await annotations[getIndex(currKey)].data.push([startTime, [1, videoLength]]);
             axios.post('/annotation', {
+                videoID: videoID,
                 behavior: annotations[getIndex(currKey)].text,
                 start: startTime[1],
                 end: videoLength
@@ -218,13 +227,16 @@ const Annotate = () => {
                         if (Number.isInteger(index)) {
                             // console.log(annotation.text)
                             // console.log(annotation.data[index])
-                            axios.delete('/annotation', { data: {
-                                behavior: annotation.text,
-                                start: annotation.data[index][0][1],
-                                end: annotation.data[index][1][1]
-                            }}).then(res => {
+                            axios.delete('/annotation', {
+                                data: {
+                                    videoID: videoID,
+                                    behavior: annotation.text,
+                                    start: annotation.data[index][0][1],
+                                    end: annotation.data[index][1][1]
+                                }
+                            }).then(res => {
                                 console.log(res);
-                                
+
                             })
                             annotation.data.splice(index, 1);
                         }
@@ -267,6 +279,7 @@ const Annotate = () => {
                             setCurrKey(null);
                             annotations[i].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
                             axios.post('/annotation', {
+                                videoID: videoID,
                                 behavior: annotations[i].text,
                                 start: startTime[1],
                                 end: videoPlayedSeconds
@@ -290,6 +303,7 @@ const Annotate = () => {
                             // console.log(getIndex(currKey));
                             annotations[getIndex(currKey)].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
                             axios.post('/annotation', {
+                                videoID: videoID,
                                 behavior: annotations[getIndex(currKey)].text,
                                 start: startTime[1],
                                 end: videoPlayedSeconds
@@ -314,6 +328,7 @@ const Annotate = () => {
                     // setEndTime([videoPlayed, videoPlayedSeconds]);
                     annotations[getIndex(currKey)].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
                     axios.post('/annotation', {
+                        videoID: videoID,
                         behavior: annotations[getIndex(currKey)].text,
                         start: startTime[1],
                         end: videoPlayedSeconds
@@ -394,8 +409,17 @@ const Annotate = () => {
         }
     }
 
-
-
+    const handleAnnotation1 = (behavior) => {
+        for (const annotation of annotations) {
+            if (behavior.text === annotation.text) {
+                let c = annotation.data.sort(function (a, b) {
+                    return a[0][0] - b[0][0];
+                });
+                return c;
+                // console.log(g)
+            }
+        }
+    }
 
     return (
         <div>
@@ -405,13 +429,19 @@ const Annotate = () => {
                 <div className="annotate1">
 
                     <div className="fileuploads">
-                        <button onClick={() => setSummary(!summary)}>Summary</button>
-                        {summary && <div>
+                        {/* <button onClick={() => setSummary(!summary)}>Summary</button> */}
+                        <Popup trigger={<button> Summary</button>} position="left center">
                             {annotations.map((annotation) => (
                                 <div>{annotation.text} : {calculateSummary(annotation)} %</div>
                             ))}
                             <div>total annotated: {totalAnnotation()} %</div>
-                        </div>}
+                        </Popup>
+                        {/* {summary && <div>
+                            {annotations.map((annotation) => (
+                                <div>{annotation.text} : {calculateSummary(annotation)} %</div>
+                            ))}
+                            <div>total annotated: {totalAnnotation()} %</div>
+                        </div>} */}
                         <input type="file" onChange={handleVideoUpload} />
                         {!newBehavior && <button onClick={() => setNewBehavior(!newBehavior)}>Add behavior</button>}
                         {newBehavior &&
@@ -462,6 +492,7 @@ const Annotate = () => {
 
                                     ))}
                                 </ProgressBar>
+
                             </div>
                         ))}
                     </div>
