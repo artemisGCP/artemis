@@ -18,14 +18,15 @@
     "express-validator": "^6.10.0",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
-    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.0",
     "morgan": "~1.9.1"
   },
   "devDependencies": {
     "apollo-server": "^2.21.1",
     "apollo-server-express": "^2.21.1",
+    "google-auth-library": "^7.0.2",
     "graphql": "^15.5.0",
-    "jest": "^26.6.3"
+    "jest": "^26.6.3",
+    "jsonwebtoken": "^8.5.1"
   }
 }
