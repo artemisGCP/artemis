@@ -1,7 +1,6 @@
 import { message } from 'antd';
 import axios from 'axios';
 import { setIsSignedIn, setName } from '../navbar/login';
-require('dotenv').config();
 const keys = require('./keys');
 let GoogleAuth, GoogleUser, BasicProfile;
 
