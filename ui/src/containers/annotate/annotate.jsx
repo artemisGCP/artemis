@@ -299,13 +299,7 @@ const Annotate = () => {
                         else {
                             // or press another assigned key to start a new one
                             console.log("not same key press")
-                            // console.log(currKey);
-                            // console.log(getIndex(currKey));
                             console.log(videoPlayedSeconds);
-                            // setEndTime([videoPlayed, videoPlayedSeconds]);
-
-                            // console.log(currKey);
-                            // console.log(getIndex(currKey));
                             annotations[getIndex(currKey)].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
                             axios.post('/annotation', {
                                 videoID: videoID,
@@ -352,22 +346,12 @@ const Annotate = () => {
 
     }
 
-    useEffect(() => {
-        document.addEventListener("keydown", processKeyDown, false);
-        return () => document.removeEventListener("keydown", processKeyDown, false);
-    }, [processKeyDown]);
-    // const [behaviors, setBehaviors] = useState([]);
-
     const [summary, setSummary] = useState(false);
-    // const [totalAnnotation, setTotalAnnotation] = useState(0)
-
     const calculateSummary = (annotation) => {
         let totalTime = 0;
         for (const a of annotation.data) {
             totalTime = totalTime + a[1][0] - a[0][0];
         }
-        // let a = totalAnnotation + totalTime;
-        // setTotalAnnotation(a);
         return Math.round(totalTime * 100)
     }
 
@@ -395,8 +379,6 @@ const Annotate = () => {
                     d.push(a[1][0])
                     e.push(a[0][0])
                 }
-                // console.log(d);
-                // console.log(e);
                 d.push(1);
 
                 let f = false;
@@ -416,47 +398,37 @@ const Annotate = () => {
         }
     }
 
-
-
-    // const handleAnnotation1 = (behavior) => {
-    //     for (const annotation of annotations) {
-    //         if (behavior.text === annotation.text) {
-    //             let c = annotation.data.sort(function (a, b) {
-    //                 return a[0][0] - b[0][0];
-    //             });
-
-    //             return c;
-    //             // console.log(g)
-    //         }
-    //     }
-
-    // }
-
     const handleAnnotationUpdate = (annotation, d, a, e) => {
         console.log(annotation.text)
         console.log(d)
         console.log(a)
         console.log(e.target.value)
-        for (const anno of annotations) {
-            if (anno.text === annotation.text) {
-                for (let b of anno.data) {
-                    if (b === d) {
-                        console.log("good");
-                        let f = parseFloat(e.target.value) / b[a][1] * b[a][0];
-                        b[a][1] = parseFloat(e.target.value);
-                        b[a][0] = f;
-                        console.log(annotation);
-                    }
-                }
-                // console.log(g)
-            }
+        if (!e.target.value) {
+            console.log('empty')
         }
-        setAnnotations(annotations);
-        setRefresh({});
-        console.log(currKey);
-        console.log(currKeyState);
-        setCurrKeyState(false);
-        setCurrKey(null);
+        else {
+            for (const anno of annotations) {
+                if (anno.text === annotation.text) {
+                    for (let b of anno.data) {
+                        if (b === d) {
+                            console.log("good");
+                            let f = parseFloat(e.target.value) / b[a][1] * b[a][0];
+                            b[a][1] = parseFloat(e.target.value);
+                            b[a][0] = f;
+                            console.log(annotation);
+                        }
+                    }
+                    // console.log(g)
+                }
+            }
+            setAnnotations(annotations);
+            setRefresh({});
+            console.log(currKey);
+            console.log(currKeyState);
+            setCurrKeyState(false);
+            setCurrKey(null);
+            setChangeValue(false);
+        }
     }
 
     const deleteAnnotation = (annotation, d) => {
@@ -468,7 +440,6 @@ const Annotate = () => {
                 for (const i in anno.data) {
                     if (anno.data[i] == d) {
                         console.log(i);
-                        // index = i;
                         axios.delete('/annotation', {
                             data: {
                                 videoID: videoID,
@@ -485,7 +456,6 @@ const Annotate = () => {
                         break;
                     }
                 }
-                // anno.data.splice(index, 1);
                 break;
             }
 
@@ -497,27 +467,17 @@ const Annotate = () => {
 
     return (
         <div>
-            {/* {onkeydown && processKeyDown} */}
             <div className="annotate">
                 <div className="fill" onClick={() => setFocusedBehavior(null)}></div>
-
-                {/* <div className="m"></div> */}
                 <div className="annotate1">
 
                     <div className="fileuploads" onClick={() => setFocusedBehavior(null)}>
-                        {/* <button onClick={() => setSummary(!summary)}>Summary</button> */}
                         <Popup trigger={<button> Summary</button>} position="left center">
                             {annotations.map((annotation) => (
                                 <div>{annotation.text} : {calculateSummary(annotation)} %</div>
                             ))}
                             <div>total annotated: {totalAnnotation()} %</div>
                         </Popup>
-                        {/* {summary && <div>
-                            {annotations.map((annotation) => (
-                                <div>{annotation.text} : {calculateSummary(annotation)} %</div>
-                            ))}
-                            <div>total annotated: {totalAnnotation()} %</div>
-                        </div>} */}
                         <input type="file" onChange={handleVideoUpload} />
                         {!newBehavior && <button onClick={() => setNewBehavior(!newBehavior)}>Add behavior</button>}
                         {newBehavior &&
@@ -540,16 +500,14 @@ const Annotate = () => {
                     </div>
                 </div>
 
-                <div className="annotate3">
+                <div className="annotate3" onKeyDown={processKeyDown}>
                     <div className="video" onClick={() => setFocusedBehavior(null)}>
 
                         <ReactPlayer
-                            // ref={(e) => console.log(e.getDuration())}
                             url={videoFilePath}
                             width="100%"
                             height="100%"
                             controls={true}
-                            // onProgress={(value) => setVideoPlayed(value['played'])}
                             onProgress={(value) => handleVideoPlayed(value)}
                             onEnded={handleVideoEnd}
                             onDuration={(e) => setVideoLength(e)}
@@ -560,9 +518,6 @@ const Annotate = () => {
                     <div className="annotations1">
                         {annotations.map((behavior) => (
                             <div className="annotation1" key={behavior.text}>
-                                {/* {handleAnnotation(behavior).map((d) => (
-                                    <input type="range" min={d[0][0]} max={d[1][0]} step="any"/>
-                                ))} */}
                                 <ProgressBar>
                                     {handleAnnotation(behavior).map((d) => (
                                         <ProgressBar tabIndex="0" onFocus={() => handleBehaviors(d)} variant={d.show} now={d.seg} key={d.key} onChange={value => console.log(value)} />
@@ -581,7 +536,6 @@ const Annotate = () => {
 
 
                 </div>
-                {/* <div className="m"></div> */}
                 <div className="fill" id="progress" onClick={() => setFocusedBehavior(null)}>
                     <div >
                         {annotations.map((annotation) => (
@@ -591,8 +545,8 @@ const Annotate = () => {
                                         <div key={v4()}>
                                             {/* <form> */}
                                             <label> {annotation.text}: </label>
-                                            <input type="text" className="form-input" style={{ width: "50px" }} defaultValue={Math.round(d[0][1] * 100) / 100} onChange={(e) => handleAnnotationUpdate(annotation, d, 0, e)} />
-                                            <input type="text" className="form-input" style={{ width: "50px" }} defaultValue={Math.round(d[1][1] * 100) / 100} onChange={(e) => handleAnnotationUpdate(annotation, d, 1, e)} />
+                                            <input type="number" step="0.1" className="form-input" style={{ width: "60px" }} defaultValue={Math.round(d[0][1] * 100) / 100} onChange={(e) => handleAnnotationUpdate(annotation, d, 0, e)} />
+                                            <input type="number" step="0.1" className="form-input" style={{ width: "60px" }} defaultValue={Math.round(d[1][1] * 100) / 100} onChange={(e) => handleAnnotationUpdate(annotation, d, 1, e)} />
                                             <BsFillTrashFill size={20} onClick={() => deleteAnnotation(annotation, d)} />
                                             {/* </form> */}
                                         </div>
