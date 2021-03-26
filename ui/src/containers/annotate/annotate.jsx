@@ -12,7 +12,7 @@ import drinking from '../../assets/drinking.jpg';
 import rearing from '../../assets/rearing.jpg';
 
 import ReactPlayer from 'react-player'
-import useKeyPress from './useKeyPress.jsx'
+// import useKeyPress from './useKeyPress.jsx'
 import axios from 'axios';
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,6 +24,8 @@ import 'react-input-range/lib/css/index.css';
 
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+
+import { v4 } from 'uuid';
 
 const Annotate = () => {
 
@@ -162,7 +164,7 @@ const Annotate = () => {
         setNewBehavior(false);
     }
 
-    const pressOne = useKeyPress('a');
+    // const pressOne = useKeyPress('a');
     const [videoLength, setVideoLength] = useState(0);
 
     const [currKey, setCurrKey] = useState(null);
@@ -177,7 +179,7 @@ const Annotate = () => {
             }
         }
     }
-
+    const [refresh, setRefresh] = useState();
     const handleVideoEnd = async (a) => {
         if (currKeyState === true) {
             // await setEndTime([videoPlayed, videoPlayedSeconds]);
@@ -213,38 +215,40 @@ const Annotate = () => {
         // console.log(e.key)
         let checked = false;
         if (e.key === "Delete" || e.key === "Backspace") {
-            // console.log(e.key);
-            if (focusedBehavior) {
-                for (let annotation of annotations) {
-                    if (annotation.text === focusedBehavior.behavior) {
-                        annotation.data = annotation.data.sort(function (a, b) {
-                            return a[0][0] - b[0][0];
-                        });
-                        const index = (focusedBehavior.key - 1) / 2
-                        console.log(index);
-                        console.log(Number.isInteger(index))
+            console.log(e.key);
+            // if (focusedBehavior) {
+            //     for (let annotation of annotations) {
+            //         if (annotation.text === focusedBehavior.behavior) {
+            //             annotation.data = annotation.data.sort(function (a, b) {
+            //                 return a[0][0] - b[0][0];
+            //             });
+            //             const index = (focusedBehavior.key - 1) / 2
+            //             console.log(index);
+            //             console.log(Number.isInteger(index))
 
-                        if (Number.isInteger(index)) {
-                            // console.log(annotation.text)
-                            // console.log(annotation.data[index])
-                            axios.delete('/annotation', {
-                                data: {
-                                    videoID: videoID,
-                                    behavior: annotation.text,
-                                    start: annotation.data[index][0][1],
-                                    end: annotation.data[index][1][1]
-                                }
-                            }).then(res => {
-                                console.log(res);
+            //             if (Number.isInteger(index)) {
+            //                 // console.log(annotation.text)
+            //                 // console.log(annotation.data[index])
+            //                 axios.delete('/annotation', {
+            //                     data: {
+            //                         videoID: videoID,
+            //                         behavior: annotation.text,
+            //                         start: annotation.data[index][0][1],
+            //                         end: annotation.data[index][1][1]
+            //                     }
+            //                 }).then(res => {
+            //                     console.log(res);
 
-                            })
-                            annotation.data.splice(index, 1);
-                        }
-                    }
-                }
-                setAnnotations(annotations);
-                setFocusedBehavior(null);
-            }
+            //                 })
+            //                 annotation.data.splice(index, 1);
+            //             }
+            //         }
+            //         console.log(annotation);
+            //     }
+            //     setAnnotations(annotations);
+            //     setFocusedBehavior(null);
+            //     setRefresh({});
+            // }
         }
         else if (!videoFilePath) {
             console.log("no video upload");
@@ -290,6 +294,7 @@ const Annotate = () => {
 
                             setAnnotations(annotations);
                             console.log(annotations);
+                            setRefresh({});
                         }
                         else {
                             // or press another assigned key to start a new one
@@ -314,6 +319,7 @@ const Annotate = () => {
                             setCurrKey(behaviors[i].text);
                             setStartTime([videoPlayed, videoPlayedSeconds]);
                             console.log(annotations);
+                            setRefresh({});
                         }
                         checked = true;
                         break;
@@ -339,6 +345,7 @@ const Annotate = () => {
                     setCurrKeyState(false);
                     setCurrKey(null);
                     console.log(annotations);
+                    setRefresh({});
                 }
             }
         }
@@ -346,8 +353,8 @@ const Annotate = () => {
     }
 
     useEffect(() => {
-        document.addEventListener("keydown", processKeyDown);
-        return () => document.removeEventListener("keydown", processKeyDown);
+        document.addEventListener("keydown", processKeyDown, false);
+        return () => document.removeEventListener("keydown", processKeyDown, false);
     }, [processKeyDown]);
     // const [behaviors, setBehaviors] = useState([]);
 
@@ -409,26 +416,95 @@ const Annotate = () => {
         }
     }
 
-    const handleAnnotation1 = (behavior) => {
-        for (const annotation of annotations) {
-            if (behavior.text === annotation.text) {
-                let c = annotation.data.sort(function (a, b) {
-                    return a[0][0] - b[0][0];
-                });
-                return c;
+
+
+    // const handleAnnotation1 = (behavior) => {
+    //     for (const annotation of annotations) {
+    //         if (behavior.text === annotation.text) {
+    //             let c = annotation.data.sort(function (a, b) {
+    //                 return a[0][0] - b[0][0];
+    //             });
+
+    //             return c;
+    //             // console.log(g)
+    //         }
+    //     }
+
+    // }
+
+    const handleAnnotationUpdate = (annotation, d, a, e) => {
+        console.log(annotation.text)
+        console.log(d)
+        console.log(a)
+        console.log(e.target.value)
+        for (const anno of annotations) {
+            if (anno.text === annotation.text) {
+                for (let b of anno.data) {
+                    if (b === d) {
+                        console.log("good");
+                        let f = parseFloat(e.target.value) / b[a][1] * b[a][0];
+                        b[a][1] = parseFloat(e.target.value);
+                        b[a][0] = f;
+                        console.log(annotation);
+                    }
+                }
                 // console.log(g)
             }
         }
+        setAnnotations(annotations);
+        setRefresh({});
+        console.log(currKey);
+        console.log(currKeyState);
+        setCurrKeyState(false);
+        setCurrKey(null);
+    }
+
+    const deleteAnnotation = (annotation, d) => {
+        console.log(annotation)
+        console.log(d)
+        // let index = 0
+        for (const anno of annotations) {
+            if (anno.text === annotation.text) {
+                for (const i in anno.data) {
+                    if (anno.data[i] == d) {
+                        console.log(i);
+                        // index = i;
+                        axios.delete('/annotation', {
+                            data: {
+                                videoID: videoID,
+                                behavior: annotation.text,
+                                start: anno.data[i][0][1],
+                                end: anno.data[i][1][1]
+                            }
+                        }).then(res => {
+                            console.log(res);
+
+                        })
+                        anno.data.splice(i, 1);
+                        console.log(anno)
+                        break;
+                    }
+                }
+                // anno.data.splice(index, 1);
+                break;
+            }
+
+        }
+        console.log(annotations);
+        setAnnotations(annotations);
+        setRefresh({});
     }
 
     return (
         <div>
             {/* {onkeydown && processKeyDown} */}
             <div className="annotate">
+                <div className="fill" onClick={() => setFocusedBehavior(null)}></div>
+
                 {/* <div className="m"></div> */}
                 <div className="annotate1">
 
-                    <div className="fileuploads">
+                    <div className="fileuploads" onClick={() => setFocusedBehavior(null)}>
                         {/* <button onClick={() => setSummary(!summary)}>Summary</button> */}
                         <Popup trigger={<button> Summary</button>} position="left center">
                             {annotations.map((annotation) => (
@@ -451,7 +527,7 @@ const Annotate = () => {
                             </div>
                         }
                     </div>
-                    <div className="annotations">
+                    <div className="annotations" onClick={() => setFocusedBehavior(null)}>
                         {behaviors.map((behavior) => (
                             <div className="annotation" key={behavior.text}>
                                 <BsFillTrashFill size={20} onClick={deleteBehavior(behavior)} />
@@ -465,7 +541,7 @@ const Annotate = () => {
                 </div>
 
                 <div className="annotate3">
-                    <div className="video">
+                    <div className="video" onClick={() => setFocusedBehavior(null)}>
 
                         <ReactPlayer
                             // ref={(e) => console.log(e.getDuration())}
@@ -477,18 +553,19 @@ const Annotate = () => {
                             onProgress={(value) => handleVideoPlayed(value)}
                             onEnded={handleVideoEnd}
                             onDuration={(e) => setVideoLength(e)}
+                            onPause={(e) => console.log(e)}
                         />
 
                     </div>
                     <div className="annotations1">
-                        {behaviors.map((behavior) => (
+                        {annotations.map((behavior) => (
                             <div className="annotation1" key={behavior.text}>
                                 {/* {handleAnnotation(behavior).map((d) => (
                                     <input type="range" min={d[0][0]} max={d[1][0]} step="any"/>
                                 ))} */}
                                 <ProgressBar>
                                     {handleAnnotation(behavior).map((d) => (
-                                        <ProgressBar tabIndex="0" onFocus={() => handleBehaviors(d)} variant={d.show} now={d.seg} key={d.key} />
+                                        <ProgressBar tabIndex="0" onFocus={() => handleBehaviors(d)} variant={d.show} now={d.seg} key={d.key} onChange={value => console.log(value)} />
 
                                     ))}
                                 </ProgressBar>
@@ -505,8 +582,31 @@ const Annotate = () => {
 
                 </div>
                 {/* <div className="m"></div> */}
-            </div>
+                <div className="fill" id="progress" onClick={() => setFocusedBehavior(null)}>
+                    <div >
+                        {annotations.map((annotation) => (
+                            <div id="form-value">
+                                <div >
+                                    {annotation.data.map((d) => (
+                                        <div key={v4()}>
+                                            {/* <form> */}
+                                            <label> {annotation.text}: </label>
+                                            <input type="text" className="form-input" style={{ width: "50px" }} defaultValue={Math.round(d[0][1] * 100) / 100} onChange={(e) => handleAnnotationUpdate(annotation, d, 0, e)} />
+                                            <input type="text" className="form-input" style={{ width: "50px" }} defaultValue={Math.round(d[1][1] * 100) / 100} onChange={(e) => handleAnnotationUpdate(annotation, d, 1, e)} />
+                                            <BsFillTrashFill size={20} onClick={() => deleteAnnotation(annotation, d)} />
+                                            {/* </form> */}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
 
+
+                        ))}
+                    </div>
+
+                </div>
+
+            </div>
         </div>
 
     );

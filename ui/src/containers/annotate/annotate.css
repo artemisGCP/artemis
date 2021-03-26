@@ -133,3 +133,31 @@ input[type='file'] {
   .bg-none {
     background-color: rgb(32, 33, 139);
   }
+
+  .fill {
+      flex: 1;
+      height: 700px;
+  }
+
+  #progress {
+    margin-left: 20px;
+    min-width: 200px;
+    overflow: auto;
+  }
+
+  .form-input {
+      margin: 5px;
+      /* background-color: aqua; */
+  }
+
+  label {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    text-align: right;
+    width: 40px;
+    line-height: 26px;
+    margin-bottom: 10px;
+    margin-right: 40px;
+    font-size: 112%;
+  }
