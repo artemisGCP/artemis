@@ -135,6 +135,10 @@ input[type='file'] {
   }
 
   .fill {
+      /* display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: column; */
       flex: 1;
       height: 700px;
   }
@@ -143,6 +147,7 @@ input[type='file'] {
     margin-left: 20px;
     min-width: 240px;
     overflow: auto;
+    max-height: 630px;;
   }
 
   .form-input {
@@ -160,4 +165,15 @@ input[type='file'] {
     margin-bottom: 10px;
     margin-right: 40px;
     font-size: 112%;
+  }
+
+  .save-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 240px;
+      margin-left: 10px;
+      margin-top: 10px;
+      font-size:medium;
   }

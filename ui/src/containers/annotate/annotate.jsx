@@ -184,14 +184,14 @@ const Annotate = () => {
         if (currKeyState === true) {
             // await setEndTime([videoPlayed, videoPlayedSeconds]);
             await annotations[getIndex(currKey)].data.push([startTime, [1, videoLength]]);
-            axios.post('/annotation', {
-                videoID: videoID,
-                behavior: annotations[getIndex(currKey)].text,
-                start: startTime[1],
-                end: videoLength
-            }).then(res => {
-                console.log(res);
-            })
+            // axios.post('/annotation', {
+            //     videoID: videoID,
+            //     behavior: annotations[getIndex(currKey)].text,
+            //     start: startTime[1],
+            //     end: videoLength
+            // }).then(res => {
+            //     console.log(res);
+            // })
             setAnnotations(annotations);
             setCurrKeyState(false);
             setCurrKey(null);
@@ -282,14 +282,14 @@ const Annotate = () => {
                             setCurrKeyState(false);
                             setCurrKey(null);
                             annotations[i].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
-                            axios.post('/annotation', {
-                                videoID: videoID,
-                                behavior: annotations[i].text,
-                                start: startTime[1],
-                                end: videoPlayedSeconds
-                            }).then(res => {
-                                console.log(res);
-                            })
+                            // axios.post('/annotation', {
+                            //     videoID: videoID,
+                            //     behavior: annotations[i].text,
+                            //     start: startTime[1],
+                            //     end: videoPlayedSeconds
+                            // }).then(res => {
+                            //     console.log(res);
+                            // })
                             // setAnnotations(annotations);
 
                             setAnnotations(annotations);
@@ -301,14 +301,14 @@ const Annotate = () => {
                             console.log("not same key press")
                             console.log(videoPlayedSeconds);
                             annotations[getIndex(currKey)].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
-                            axios.post('/annotation', {
-                                videoID: videoID,
-                                behavior: annotations[getIndex(currKey)].text,
-                                start: startTime[1],
-                                end: videoPlayedSeconds
-                            }).then(res => {
-                                console.log(res);
-                            })
+                            // axios.post('/annotation', {
+                            //     videoID: videoID,
+                            //     behavior: annotations[getIndex(currKey)].text,
+                            //     start: startTime[1],
+                            //     end: videoPlayedSeconds
+                            // }).then(res => {
+                            //     console.log(res);
+                            // })
                             setAnnotations(annotations);
                             setCurrKey(behaviors[i].text);
                             setStartTime([videoPlayed, videoPlayedSeconds]);
@@ -327,14 +327,14 @@ const Annotate = () => {
                     console.log(videoPlayedSeconds);
                     // setEndTime([videoPlayed, videoPlayedSeconds]);
                     annotations[getIndex(currKey)].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
-                    axios.post('/annotation', {
-                        videoID: videoID,
-                        behavior: annotations[getIndex(currKey)].text,
-                        start: startTime[1],
-                        end: videoPlayedSeconds
-                    }).then(res => {
-                        console.log(res);
-                    })
+                    // axios.post('/annotation', {
+                    //     videoID: videoID,
+                    //     behavior: annotations[getIndex(currKey)].text,
+                    //     start: startTime[1],
+                    //     end: videoPlayedSeconds
+                    // }).then(res => {
+                    //     console.log(res);
+                    // })
                     setAnnotations(annotations);
                     setCurrKeyState(false);
                     setCurrKey(null);
@@ -427,7 +427,6 @@ const Annotate = () => {
             console.log(currKeyState);
             setCurrKeyState(false);
             setCurrKey(null);
-            setChangeValue(false);
         }
     }
 
@@ -440,17 +439,17 @@ const Annotate = () => {
                 for (const i in anno.data) {
                     if (anno.data[i] == d) {
                         console.log(i);
-                        axios.delete('/annotation', {
-                            data: {
-                                videoID: videoID,
-                                behavior: annotation.text,
-                                start: anno.data[i][0][1],
-                                end: anno.data[i][1][1]
-                            }
-                        }).then(res => {
-                            console.log(res);
+                        // axios.delete('/annotation', {
+                        //     data: {
+                        //         videoID: videoID,
+                        //         behavior: annotation.text,
+                        //         start: anno.data[i][0][1],
+                        //         end: anno.data[i][1][1]
+                        //     }
+                        // }).then(res => {
+                        //     console.log(res);
 
-                        })
+                        // })
                         anno.data.splice(i, 1);
                         console.log(anno)
                         break;
@@ -463,6 +462,25 @@ const Annotate = () => {
         console.log(annotations);
         setAnnotations(annotations);
         setRefresh({});
+    }
+
+    const [saveAnnotate, setSaveAnnotate] = useState('');
+
+    const saveAnnotations = () => {
+        setSaveAnnotate('saving');
+        console.log("saving", saveAnnotate);
+        axios.post('/annotation', {
+            videoID: videoID,
+            annotations: annotations
+        }).then(res => {
+            console.log(res);
+            setSaveAnnotate('saved');
+        })
+
+        setTimeout(function () {
+            setSaveAnnotate('saved');
+        }, 3000);
+        
     }
 
     return (
@@ -492,7 +510,8 @@ const Annotate = () => {
                             <div className="annotation" key={behavior.text}>
                                 <BsFillTrashFill size={20} onClick={deleteBehavior(behavior)} />
                                 <button>{behavior.key}</button>
-                                <button className="annotation-button" style={{ background: behavior.color }}>{behavior.text}</button>
+                                {/* <button className="annotation-button" style={{ background: behavior.color }}>{behavior.text}</button> */}
+                                <button className="annotation-button">{behavior.text}</button>
                                 <BsFillQuestionCircleFill size={20} onMouseOver={displayImage(behavior)} onMouseOut={displayImage(behavior)} />
 
                             </div>
@@ -536,8 +555,8 @@ const Annotate = () => {
 
 
                 </div>
-                <div className="fill" id="progress" onClick={() => setFocusedBehavior(null)}>
-                    <div >
+                <div className="fill"  onClick={() => setFocusedBehavior(null)}>
+                    <div id="progress">
                         {annotations.map((annotation) => (
                             <div id="form-value">
                                 <div >
@@ -556,6 +575,10 @@ const Annotate = () => {
 
 
                         ))}
+                    </div>
+                    <div className="save-button">
+                        <button onClick={() => saveAnnotations()}>save</button>
+                        {saveAnnotate && <p>{saveAnnotate}</p>}
                     </div>
 
                 </div>
