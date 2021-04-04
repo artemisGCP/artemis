@@ -1,4 +1,6 @@
-## Install package
+# autoBA
+
+## Install dependencies
 
 npm install
 
