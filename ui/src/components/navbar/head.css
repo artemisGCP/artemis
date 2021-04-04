@@ -15,10 +15,11 @@
   background: #2950b8;
   color: #dcdcdc;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 17px;
 }
 .head .ant-menu-horizontal {
   border-bottom: none;
+  line-height: 44px;
 }
 
 .head .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-selected,

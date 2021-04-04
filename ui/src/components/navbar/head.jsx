@@ -2,25 +2,33 @@ import React, { useEffect, useState } from 'react';
 import { Menu } from 'antd';
 import { useHistory } from 'react-router-dom';
 import logo from '../../assets/logo.png';
+import { Login } from './login.jsx';
 import './head.css';
 
 const Head = () => {
+  const history = useHistory();
   const [current, setCurrent] = useState('');
 
-  const history = useHistory();
   const handleClick = (e) => {
     setCurrent(e.key);
     history.push(e.key);
   };
 
-  useEffect(() => {
-    let init = history.location.pathname;
-    if (init === '/') {
+  const setPath = () => {
+    const path = history.location.pathname;
+    if (path === '/') {
       setCurrent('home');
     } else {
-      setCurrent(init.substr(1));
+      setCurrent(path.substr(1));
     }
-  }, [history]);
+  };
+
+  useEffect(() => {
+    history.listen(() => {
+      setPath();
+    });
+    setPath(); // eslint-disable-next-line
+  }, []);
 
   return (
     <div className="head">
@@ -28,6 +36,7 @@ const Head = () => {
         <img src={logo} height="46px" alt="logo" />
         <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
           <Menu.Item key="home">Home</Menu.Item>
+          <Menu.Item key="guide">User Guide</Menu.Item>
           <Menu.Item key="annotate">Annotate</Menu.Item>
           <Menu.Item key="train">Train</Menu.Item>
           <Menu.Item key="predict">Predict</Menu.Item>
@@ -36,7 +45,7 @@ const Head = () => {
         </Menu>
       </div>
       <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-        <Menu.Item key="login">Login</Menu.Item>
+        {Login()}
       </Menu>
     </div>
   );

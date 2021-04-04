@@ -28,9 +28,9 @@ const Home = () => {
           <div className="title">AutoPlanet</div>
           <div className="sub-title">A web application for automated animal behavioral analysis</div>
         </div>
-        <Button shape="round" className="button" onClick={launch}>
+        {/* <Button shape="round" className="button" onClick={launch}>
           Launch App
-        </Button>
+        </Button> */}
       </div>
       <div className="part-2">
         <Slider {...settings}>
@@ -71,6 +71,13 @@ const Home = () => {
             <img src={body3} alt="body3" />
           </span>
         </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
       </div>
     </div>
   );

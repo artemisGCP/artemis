@@ -1,13 +1,24 @@
-import { Input, Form, Button } from 'antd';
-import { InstagramFilled, LinkedinFilled, FacebookFilled, GooglePlusSquareFilled, TwitterSquareFilled, HeartOutlined, EnvironmentOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import React from 'react';
+import { Input, Form, Button, message } from 'antd';
+import { InstagramFilled, LinkedinFilled, FacebookFilled, GooglePlusSquareFilled, TwitterSquareFilled, HeartOutlined, EnvironmentOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import './contact.css';
 
 const Contact = () => {
+
+  const sendthru = () => {
+    if (document.getElementById('name').value === '' || document.getElementById('email').value === '' || document.getElementById('msg').value === '') {
+      message.warning('Please fill in all the fields.');
+    } else {
+      document.getElementById('name').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('msg').value = '';
+      message.success('Your message has been sent!');
+    }
+  };
+
   return (
     <div className="contact">
       <div className="page-title ">Contact</div>
-      <hr />
       <div className="title">
         We’d <HeartOutlined /> to help!
       </div>
@@ -16,16 +27,16 @@ const Contact = () => {
         <div className="left">
           <Form>
             <Form.Item>
-              <Input placeholder="Your Name" />
+              <Input.TextArea id="name" placeholder="Your Name" />
             </Form.Item>
             <Form.Item>
-              <Input placeholder="Email" />
+              <Input.TextArea id="email" placeholder="Email" />
             </Form.Item>
             <Form.Item>
-              <Input.TextArea style={{ height: 80 }} placeholder="Message" />
+              <Input.TextArea id="msg" style={{ height: 80 }} placeholder="Message" />
             </Form.Item>
             <Form.Item>
-              <Button block>Send</Button>
+              <Button block onClick={sendthru}>Send</Button>
             </Form.Item>
           </Form>
         </div>
