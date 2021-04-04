@@ -113,6 +113,10 @@ function getCurrUser(req) {
   }
 }
 
+app.get('/', async(req, res) => {
+  res.send("Welcome to our app");
+})
+
 app.post('/signin', async(req, res)  => {
   if (!JWT_SECRET) {
     res.status(500).send("Authentication failed: You are missing a JWT_SECRET");
