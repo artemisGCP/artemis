@@ -412,7 +412,7 @@ const Annotate = () => {
                     for (let b of anno.data) {
                         if (b === d) {
                             console.log("good");
-                            let f = parseFloat(e.target.value) / b[a][1] * b[a][0];
+                            let f = parseFloat(e.target.value) / b[1][1] * b[1][0];
                             b[a][1] = parseFloat(e.target.value);
                             b[a][0] = f;
                             console.log(annotation);
