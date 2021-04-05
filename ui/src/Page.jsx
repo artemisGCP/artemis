@@ -3,7 +3,6 @@ import { HashRouter as Router } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import Body from './router.js';
 import Head from '../src/components/navbar/head.jsx';
-import Footer from '../src/components/footer/footer.jsx';
 import Home from '../src/containers/home/home.jsx';
 
 import './global.css';
@@ -25,7 +24,6 @@ class Page extends React.Component {
         <>
           <Head />
           <Body />
-        
         </>
       )
     }

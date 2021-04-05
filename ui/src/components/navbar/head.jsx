@@ -42,6 +42,7 @@ const Head = () => {
           <Menu.Item key="predict">Predict</Menu.Item>
           <Menu.Item key="results">Results</Menu.Item>
           <Menu.Item key="contact">Contact</Menu.Item>
+          <Menu.Item key="privacy">Privacy</Menu.Item>
         </Menu>
       </div>
       <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">

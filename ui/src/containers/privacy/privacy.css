@@ -1,0 +1,57 @@
+.page-title1 {
+  font-size: 25px;
+  font-weight: 700;
+  margin-top: 60px;
+  margin-bottom: 10px;
+}
+.page-title {
+  font-size: 25px;
+  font-weight: 700;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.text-div {
+  font-size: 17px;
+  margin-bottom: 30px;
+  text-align: justify;
+}
+
+.privacy {
+  width: 80vw;
+  margin: 8px auto;
+  text-align: left;
+}
+.privacy h2 {
+  color: #1d1d1f;
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: 600;
+}
+
+.privacy h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 0px;
+}
+.privacy h4 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.privacy p {
+  text-align: justify;
+  line-height: 20px;
+  font-size: 14px;
+}
+
+.privacy .img {
+  text-align: center;
+  margin: 20px 0px;
+}
+
+.privacy .upload {
+  margin-top: 10px;
+  display: flex;
+  height: 200px;
+}
