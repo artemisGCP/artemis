@@ -48,6 +48,7 @@
   text-align: center;
 }
 .predict_model button {
+  color: black;
   font-size: 17px;
-  font-weight: 800;
+  background: #c4c4c4;
 }

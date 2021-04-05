@@ -14,7 +14,7 @@ const Guide = () => {
       
       <div className="page-title">Overall web app workflow</div>
       <div className="img">
-        <img src={img1} height="300px" />
+        <img src={img1} height="300px" alt="web app workflow" />
       </div>
 
       <div className="page-title">Step 1: Login with a Google account</div>
@@ -28,7 +28,7 @@ const Guide = () => {
         3. Utilize the Load new file tab to upload a new video.
       </div>
       <div className="img">
-        <img src={img2} height="600px" />
+        <img src={img2} height="600px" alt="behavior annotation demo" />
       </div>
 
       <div className="page-title">Step 3: Model training</div>

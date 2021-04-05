@@ -9,6 +9,7 @@ import Train from './containers/train/train.jsx';
 import Predict from './containers/predict/predict.jsx';
 import Results from './containers/results/results.jsx';
 import Login from './containers/login/login.jsx';
+import Privacy from './containers/privacy/privacy.jsx';
 
 const Body = () => {
   return (
@@ -22,6 +23,7 @@ const Body = () => {
       <Route path="/contact" exact component={Contact} />
       <Route path="/results" exact component={Results} />
       <Route path="/login" exact component={Login} />
+      <Route path="/privacy" exact component={Privacy} />
     </Switch>
   );
 };
