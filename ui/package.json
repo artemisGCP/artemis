@@ -2,9 +2,11 @@
   "name": "test",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "antd": "^4.11.2",
     "axios": "^0.21.1",
+    "axios-https-proxy-fix": "^0.17.1",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.6.0",
     "cors": "^2.8.5",

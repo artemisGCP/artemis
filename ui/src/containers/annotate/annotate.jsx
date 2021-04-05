@@ -466,21 +466,37 @@ const Annotate = () => {
 
     const [saveAnnotate, setSaveAnnotate] = useState('');
 
+    // axios.defaults.baseURL = "http://localhost:8080"
+
     const saveAnnotations = () => {
         setSaveAnnotate('saving');
         console.log("saving", saveAnnotate);
-        axios.post('/annotation', {
-            videoID: videoID,
-            annotations: annotations
-        }).then(res => {
+
+        const url = "http://localhost:8080/annotate";
+        const config = {
+            // method: 'POST',
+            // url,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                'Content-Type': 'application/json'
+            },
+            params: {
+                videoID: videoID,
+                annotations: annotations
+            }
+        }
+
+        axios.post(url, {}, config).then(res => {
+            console.log('done');
             console.log(res);
             setSaveAnnotate('saved');
         })
 
-        setTimeout(function () {
-            setSaveAnnotate('saved');
-        }, 3000);
-        
+        // setTimeout(function () {
+        //     setSaveAnnotate('saved');
+        // }, 3000);
+
     }
 
     return (
@@ -555,7 +571,7 @@ const Annotate = () => {
 
 
                 </div>
-                <div className="fill"  onClick={() => setFocusedBehavior(null)}>
+                <div className="fill" onClick={() => setFocusedBehavior(null)}>
                     <div id="progress">
                         {annotations.map((annotation) => (
                             <div id="form-value">

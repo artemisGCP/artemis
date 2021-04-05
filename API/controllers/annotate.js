@@ -4,7 +4,7 @@ require("../app.js");
 let mongoose = require('mongoose');
 var Annotation = require('../models/annotations.js');
   
-router.post('/', async function(req, res) {
+router.post('/annotation', async function(req, res) {
     /*
     Purpose: Inserts a tuple (behavior, timestamp) in the database.
     */
