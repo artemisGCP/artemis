@@ -412,7 +412,7 @@ const Annotate = () => {
                     for (let b of anno.data) {
                         if (b === d) {
                             console.log("good");
-                            let f = parseFloat(e.target.value) / b[a][1] * b[a][0];
+                            let f = parseFloat(e.target.value) / b[1][1] * b[1][0];
                             b[a][1] = parseFloat(e.target.value);
                             b[a][0] = f;
                             console.log(annotation);
@@ -466,21 +466,37 @@ const Annotate = () => {
 
     const [saveAnnotate, setSaveAnnotate] = useState('');
 
+    // axios.defaults.baseURL = "http://localhost:8080"
+
     const saveAnnotations = () => {
         setSaveAnnotate('saving');
         console.log("saving", saveAnnotate);
-        axios.post('/annotation', {
-            videoID: videoID,
-            annotations: annotations
-        }).then(res => {
+
+        const url = "http://localhost:8080/annotate";
+        const config = {
+            // method: 'POST',
+            // url,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                'Content-Type': 'application/json'
+            },
+            params: {
+                videoID: videoID,
+                annotations: annotations
+            }
+        }
+
+        axios.post(url, {}, config).then(res => {
+            console.log('done');
             console.log(res);
             setSaveAnnotate('saved');
         })
 
-        setTimeout(function () {
-            setSaveAnnotate('saved');
-        }, 3000);
-        
+        // setTimeout(function () {
+        //     setSaveAnnotate('saved');
+        // }, 3000);
+
     }
 
     return (
@@ -492,7 +508,7 @@ const Annotate = () => {
                     <div className="fileuploads" onClick={() => setFocusedBehavior(null)}>
                         <Popup trigger={<button> Summary</button>} position="left center">
                             {annotations.map((annotation) => (
-                                <div>{annotation.text} : {calculateSummary(annotation)} %</div>
+                                <div key={v4()}>{annotation.text} : {calculateSummary(annotation)} %</div>
                             ))}
                             <div>total annotated: {totalAnnotation()} %</div>
                         </Popup>
@@ -555,10 +571,10 @@ const Annotate = () => {
 
 
                 </div>
-                <div className="fill"  onClick={() => setFocusedBehavior(null)}>
+                <div className="fill" onClick={() => setFocusedBehavior(null)}>
                     <div id="progress">
                         {annotations.map((annotation) => (
-                            <div id="form-value">
+                            <div id="form-value" key={v4()}>
                                 <div >
                                     {annotation.data.map((d) => (
                                         <div key={v4()}>
@@ -576,7 +592,7 @@ const Annotate = () => {
 
                         ))}
                     </div>
-                    <div className="save-button">
+                    <div className="save-button" key={v4()}>
                         <button onClick={() => saveAnnotations()}>save</button>
                         {saveAnnotate && <p>{saveAnnotate}</p>}
                     </div>

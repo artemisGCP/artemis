@@ -73,7 +73,7 @@ app.use(function(err, req, res, next) {
  */
 if (process.env.NODE_ENV !== "test") {
   app.listen(process.env.PORT || 8080, () => {
-    console.log("Server Running on :8080")
+    console.log(`Server Running on :${process.env.PORT}`)
     console.log(`🚀 Graphql Server ready at http://localhost:8080${server.graphqlPath}`)
   });
 
@@ -112,6 +112,11 @@ function getCurrUser(req) {
     };
   }
 }
+
+// app.get('/testing', async(req, res) => {
+//   res.send("Welcome to our app");
+//   console.log('backend called');
+// })
 
 app.post('/signin', async(req, res)  => {
   if (!JWT_SECRET) {
