@@ -22,7 +22,7 @@ const Contact = () => {
       <div className="title">
         We’d <HeartOutlined /> to help!
       </div>
-      <div className="sub-title">Please fill out and submit the form below if you have any questions! </div>
+      <div className="sub-title" tabIndex="0">Please fill out and submit the form below if you have any questions! </div>
       <div className="box">
         <div className="left">
           <Form>

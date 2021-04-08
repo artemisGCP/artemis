@@ -5,7 +5,7 @@ import './guide.css';
 
 const Guide = () => {
   return (
-    <div className="guide">
+    <div className="guide" tabIndex="0">
       <div className="page-title1">User Guide</div>
       <div className="text-div">This document provides a step-by-step user guide of using this web app.</div>
 
