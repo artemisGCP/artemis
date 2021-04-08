@@ -17,13 +17,13 @@ const Home = () => {
 
   return (
     <div className="home">
-      <div className="part-1">
+      <div className="part-1" tabIndex="-1">
         <div>
           <div className="title">AutoPlanet</div>
           <div className="sub-title">A web application for automated animal behavioral analysis</div>
         </div>
       </div>
-      <div className="part-2">
+      <div className="part-2" tabIndex="-1">
         <Slider {...settings}>
           <img src={slider1} alt="mouse sniffing picture" />
           <img src={slider2} alt="mouse eating picture" />
@@ -31,7 +31,7 @@ const Home = () => {
           <img src={slider4} alt="mouse rearing picture" />
         </Slider>
       </div>
-      <div className="part-3">
+      <div className="part-3" tabIndex="0">
         <div>
           <span>
             <i>Background</i>

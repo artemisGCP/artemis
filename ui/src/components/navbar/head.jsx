@@ -35,14 +35,14 @@ const Head = () => {
       <div className="left">
         <img src={logo} height="46px" alt="logo" />
         <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-          <Menu.Item key="home">Home</Menu.Item>
-          <Menu.Item key="guide">User Guide</Menu.Item>
-          <Menu.Item key="annotate">Annotate</Menu.Item>
-          <Menu.Item key="train">Train</Menu.Item>
-          <Menu.Item key="predict">Predict</Menu.Item>
-          <Menu.Item key="results">Results</Menu.Item>
-          <Menu.Item key="contact">Contact</Menu.Item>
-          <Menu.Item key="privacy">Privacy</Menu.Item>
+          <Menu.Item key="home" tabIndex="0">Home</Menu.Item>
+          <Menu.Item key="guide" tabIndex="0">User Guide</Menu.Item>
+          <Menu.Item key="annotate" tabIndex="0">Annotate</Menu.Item>
+          <Menu.Item key="train" tabIndex="0">Train</Menu.Item>
+          <Menu.Item key="predict" tabIndex="0">Predict</Menu.Item>
+          <Menu.Item key="results" tabIndex="0">Results</Menu.Item>
+          <Menu.Item key="contact" tabIndex="0">Contact</Menu.Item>
+          <Menu.Item key="privacy" tabIndex="0">Privacy</Menu.Item>
         </Menu>
       </div>
       <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">

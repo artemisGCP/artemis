@@ -14,7 +14,7 @@ const Results = () => {
   };
   return (
     <div className="results">
-      <div className="title">Evaluation of the fully trained model on your testing video has been performed successfully and a CSV file is generated. Pleas click on the Download Data button to view the result.</div>
+      <div className="title" tabIndex="0">Evaluation of the fully trained model on your testing video has been performed successfully and a CSV file is generated. Pleas click on the Download Data button to view the result.</div>
       <div className="csv">
         <img src={csv} alt="csv" />
         <div className="description">{new Date().toJSON().split('T')[0].replaceAll('-', '') + '01'}</div>

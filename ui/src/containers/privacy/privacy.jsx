@@ -3,7 +3,7 @@ import './privacy.css';
 
 const Privacy = () => {
   return (
-    <div className="privacy">
+    <div className="privacy" tabIndex="0">
       <div className="page-title1">Privacy Policy</div>
       <div className="text-div">When you use our services, you consent to the privacy policy outlined below:</div>
 
