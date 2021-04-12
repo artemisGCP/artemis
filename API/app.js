@@ -1,9 +1,9 @@
 const bodyParser = require("body-parser");
-var express = require('express');
+const express = require('express');
+const app = express();
 var cookieParser = require('cookie-parser');
 var expressValidator = require("express-validator");
 var logger = require('morgan');
-var cors = require('cors');
 var session = require('express-session');
 require("dotenv").config();
 var {ApolloServer} = require('apollo-server-express');
@@ -11,6 +11,10 @@ var {typeDefs, resolvers} = require('./schema');
 var {MongoClient} = require('mongodb');
 var {OAuth2Client} = require('google-auth-library');
 var jwt = require('jsonwebtoken');
+
+const cors = require('cors');
+app.use(cors())
+
 
 // Create a new MongoClient
 //const client = new MongoClient(uri);
@@ -22,7 +26,7 @@ if (!JWT_SECRET) {
   console.log("Authentication fail: Missing a JWT_SECRET")
 }
 
-var app = express();
+/*
 var server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -34,7 +38,22 @@ app.use((req, res) => {
   //res.send("Hello!");
   res.end();
 })
-app.use(cors())
+*/
+
+app.get('/', (req, res)=>{
+  res.json("main feed");
+})
+
+app.get("/posting", (req, res) => {
+  // console.log(req.body);
+  res.send("good");
+});
+
+app.post("/posting", (req, res) => {
+  console.log("req.query: ", req.query);
+  res.send(req.query);
+});
+
 
 // view engine setup omitted
 app.use(logger('dev'));
@@ -44,6 +63,7 @@ app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use(expressValidator());
+
 app.use(
 	session({
 		secret: SESSION_SECRET,
@@ -73,8 +93,8 @@ app.use(function(err, req, res, next) {
  */
 if (process.env.NODE_ENV !== "test") {
   app.listen(process.env.PORT || 8080, () => {
-    console.log("Server Running on :8080")
-    console.log(`🚀 Graphql Server ready at http://localhost:8080${server.graphqlPath}`)
+    console.log(`Server Running on :${process.env.PORT}`)
+    //console.log(`🚀 Graphql Server ready at http://localhost:8080${server.graphqlPath}`)
   });
 
 }
@@ -113,9 +133,12 @@ function getCurrUser(req) {
   }
 }
 
-app.get('/', async(req, res) => {
-  res.send("Welcome to our app");
-})
+
+// app.get('/testing', async(req, res) => {
+//   res.send("Welcome to our app");
+//   console.log('backend called');
+// })
+
 
 app.post('/signin', async(req, res)  => {
   if (!JWT_SECRET) {
@@ -152,7 +175,7 @@ app.post('/user', (req, res) => {
   }
 })
 
-app.post('signout', async (req, res) => {
+app.post('/signout', async (req, res) => {
   res.clearCookie('jwt');
   console.log("User was signed out");
 })

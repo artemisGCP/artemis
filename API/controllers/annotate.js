@@ -1,28 +1,54 @@
 const express = require("express");
 const router = express.Router();
+const cors = require('cors');
+
 require("../app.js");
 let mongoose = require('mongoose');
 var Annotation = require('../models/annotations.js');
-  
-router.post('/', async function(req, res) {
+
+router.post('/', cors(), async function(req, res) {
     /*
     Purpose: Inserts a tuple (behavior, timestamp) in the database.
     */
-   const Annotation = mongoose.model('Annotation');
-   const newDataPoint = {
-       userID: req.session.uid,
-       videoID: '',
-       behavior: req.body.behavior,
-       timestamp: req.body.timestamp
-   }
-   Annotation.insertMany(newDataPoint, function(err, result) {
-       if (err) {
-           console.error(err);
-       } else {
-           console.log(result);
-       }
-   })
-    //req.body.data // in the form: (behavior, timestamp)
+
+   console.log("req.query: ", req.query);
+    var data = req.query;
+    var annotations = data.annotations;
+
+    const Annotation = mongoose.model('Annotation');
+    //console.log(annotations);
+    
+    annotations.forEach(annotation => {
+       
+        var obj = JSON.parse(annotation);
+
+        //console.log(obj);
+        var timestamps = obj.data;
+        
+        if (obj.data !== []) {
+            timestamps.forEach(timestamp => {
+                console.log("timestamp: ", timestamp);
+                var startTime = timestamp[0][1];
+                var endTime = timestamp[1][1];
+
+                var newDataPoint = {
+                    userID: req.session.uid,
+                    videoID: '',
+                    behavior: obj.text,
+                    startTime: startTime,
+                    endTime: endTime,
+                }
+                Annotation.insertMany(newDataPoint, function(err, result) {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log(result);
+                    }
+                })
+            });
+        };   
+    });
+   
     console.log("Data inserted");
 });
 
