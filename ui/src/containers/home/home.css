@@ -1,61 +1,82 @@
 .home {
-  width: 80vw;
+  width: 100vw;
   margin: auto;
 }
+
 .home > .part-1 {
+  width: 80vw;
+  margin: auto;
+  margin-top: 45px;
   display: flex;
   justify-content: space-between;
 }
+
 .home > .part-1 .title {
-  font-size: 21px;
+  font-size: 30px;
   font-weight: 800;
 }
+
 .home > .part-1 .sub-title {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 500;
 }
+
 .home > .part-1 > .button {
   background: #e68a72;
   font-weight: 500;
   border-radius: 10px;
-  margin-top: 9px;
+  margin-top: 15px;
+  font-size: 17px;
+  padding-top: 0px;
 }
+
 .home > .part-1 > .button.ant-btn:hover,
 .button.ant-btn:focus {
   color: #000;
   background: #e68a72;
   border-color: #e68a72;
 }
+
 .home > .part-2 {
+  width: 80vw;
+  margin: auto;
   margin-top: 8px;
 }
+
 .home > .part-2 img {
   object-fit: contain;
   height: 400px;
 }
+
 .home > .part-2 .slick-next:before,
 .slick-prev:before {
   font-size: 40px;
   color: #dcc2c2;
 }
+
 .home > .part-2 .slick-next {
   right: -45px;
 }
+
 .home > .part-2 .slick-prev {
   left: -45px;
 }
 
 .home > .part-3 {
+  width: 80vw;
+  margin: auto;
   padding-top: 50px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+
 .home > .part-3 div {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
 }
+
 .home > .part-3 div span {
   width: 49.5%;
   height: 300px;
@@ -71,12 +92,14 @@
   display: block;
   text-align: center;
   font-weight: 700;
-  font-size: 30px;
+  font-size: 25px;
 }
+
 .home > .part-3 div span p {
   font-size: 17px;
   text-align: justify;
 }
+
 .home > .part-3 div span img {
   height: 300px;
   object-fit: cover;

@@ -508,7 +508,7 @@ const Annotate = () => {
                     <div className="fileuploads" onClick={() => setFocusedBehavior(null)}>
                         <Popup trigger={<button> Summary</button>} position="left center">
                             {annotations.map((annotation) => (
-                                <div>{annotation.text} : {calculateSummary(annotation)} %</div>
+                                <div key={v4()}>{annotation.text} : {calculateSummary(annotation)} %</div>
                             ))}
                             <div>total annotated: {totalAnnotation()} %</div>
                         </Popup>
@@ -574,7 +574,7 @@ const Annotate = () => {
                 <div className="fill" onClick={() => setFocusedBehavior(null)}>
                     <div id="progress">
                         {annotations.map((annotation) => (
-                            <div id="form-value">
+                            <div id="form-value" key={v4()}>
                                 <div >
                                     {annotation.data.map((d) => (
                                         <div key={v4()}>
@@ -592,7 +592,7 @@ const Annotate = () => {
 
                         ))}
                     </div>
-                    <div className="save-button">
+                    <div className="save-button" key={v4()}>
                         <button onClick={() => saveAnnotations()}>save</button>
                         {saveAnnotate && <p>{saveAnnotate}</p>}
                     </div>

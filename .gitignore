@@ -1,4 +1,6 @@
-ui/node_modules/
+src/node_modules/
+server/node_modules/
 node_modules
 .env
 .DS_Store
+src/components/auth/keys.js

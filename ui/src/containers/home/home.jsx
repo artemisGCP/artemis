@@ -1,6 +1,4 @@
 import React from 'react';
-
-import { Button, message } from 'antd';
 import Slider from 'react-slick';
 import slider1 from '../../assets/slider-1.jpg';
 import slider2 from '../../assets/slider-2.jpg';
@@ -9,7 +7,6 @@ import slider4 from '../../assets/slider-4.jpg';
 import body1 from '../../assets/body-1.jpg';
 import body2 from '../../assets/body-2.jpg';
 import body3 from '../../assets/body-3.jpg';
-
 import './home.css';
 
 const Home = () => {
@@ -18,41 +15,35 @@ const Home = () => {
     adaptiveHeight: true,
   };
 
-  const launch = () => {
-    message.success('launch app !');
-  };
   return (
     <div className="home">
-      <div className="part-1">
+      <div className="part-1" tabIndex="-1">
         <div>
           <div className="title">AutoPlanet</div>
           <div className="sub-title">A web application for automated animal behavioral analysis</div>
         </div>
-        <Button shape="round" className="button" onClick={launch}>
-          Launch App
-        </Button>
       </div>
-      <div className="part-2">
+      <div className="part-2" tabIndex="-1">
         <Slider {...settings}>
-          <img src={slider1} alt="slider1" />
-          <img src={slider2} alt="slider2" />
-          <img src={slider3} alt="slider3" />
-          <img src={slider4} alt="slider4" />
+          <img src={slider1} alt="mouse sniffing picture" />
+          <img src={slider2} alt="mouse eating picture" />
+          <img src={slider3} alt="mouse standing picture" />
+          <img src={slider4} alt="mouse rearing picture" />
         </Slider>
       </div>
-      <div className="part-3">
+      <div className="part-3" tabIndex="0">
         <div>
           <span>
             <i>Background</i>
             <p>AutoPlanet provides an efficient next-generation mouse tracker that utilizes machine learning and neural networks to achieve high performance under dynamic and complex environmental conditions with minimal training data. The versatility of this method is demonstrated by analyzing different mouse body parts across various behaviors.</p>
           </span>
           <span>
-            <img src={body1} alt="body1" />
+            <img src={body1} alt="mouse picture with behavior estimation" />
           </span>
         </div>
         <div>
           <span>
-            <img src={body2} alt="body2" />
+            <img src={body2} alt="project motivation picture" />
           </span>
           <span>
             <i>Motivation</i>
@@ -68,9 +59,16 @@ const Home = () => {
             <p>This application is designed for researchers who study mice behavior and want to utilize machine learning techniques, but don't have the skills to code and deploy their own models. By easily recording mice activity and uploading the video to our website, they can get an automated report to facilitate their study.</p>
           </span>
           <span>
-            <img src={body3} alt="body3" />
+            <img src={body3} alt="animal behavior pictures with pose estimation" />
           </span>
         </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </div>
     </div>
   );
