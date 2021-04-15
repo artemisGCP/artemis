@@ -51,9 +51,9 @@ const Annotate = () => {
     ];
 
     const [annotations, setAnnotations] = useState([
-        { "text": "resting", "data": [[[0.6, 6.0], [0.7, 7.0]], [[0.2, 2.0], [0.4, 4.0]]] },
-        { "text": "eating", "data": [[[0.4, 4.0], [0.6, 6.0]]] },
-        { "text": "ETH", "data": [[[0.0, 0.0], [0.2, 2.0]], [[0.7, 7.0], [1.0, 10.0]]] },
+        { "text": "resting", "data": [] },
+        { "text": "eating", "data": [] },
+        { "text": "ETH", "data": [] },
         { "text": "sniffing", "data": [] },
         { "text": "grooming", "data": [] },
         { "text": "hanging", "data": [] },
@@ -87,6 +87,7 @@ const Annotate = () => {
     const handleVideoPlayed = (value) => {
         setVideoPlayed(value.played);
         setVideoPlayedSeconds(value.playedSeconds);
+        getCurrTime(value.playedSeconds);
         console.log(value);
         console.log(videoPlayed, videoPlayedSeconds)
     };
@@ -339,6 +340,7 @@ const Annotate = () => {
             console.log('empty')
         }
         else {
+            
             for (const anno of annotations) {
                 if (anno.text === annotation.text) {
                     for (let b of anno.data) {
@@ -414,6 +416,17 @@ const Annotate = () => {
             setSaveAnnotate('saved');
         })
 
+    }
+
+    const [currTime, getCurrTime] = useState(-1);
+
+    const getAnnotationLength = () => {
+        let i = 0;
+        for (const a of annotations) {
+            i += a.data.length;
+        }
+        console.log(i);
+        return i;
     }
 
     return (
@@ -493,8 +506,11 @@ const Annotate = () => {
 
 
                 </div>
+                
                 <div className="fill" onClick={() => setFocusedBehavior(null)}>
+                
                     <div id="progress">
+                    {currTime>0 && <div className="curr-time">Current Time: {currTime}</div>}
                         {annotations.map((annotation) => (
                             <div id="form-value" key={v4()}>
                                 <div >
@@ -514,10 +530,14 @@ const Annotate = () => {
 
                         ))}
                     </div>
-                    <div className="save-button" key={v4()}>
+                    {getAnnotationLength()>0 &&
+                        <div className="save-button" key={v4()}>
                         <button onClick={() => saveAnnotations()}>save</button>
                         {saveAnnotate && <p>{saveAnnotate}</p>}
                     </div>
+
+                    }
+                    
 
                 </div>
 

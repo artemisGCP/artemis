@@ -177,3 +177,8 @@ input[type='file'] {
       margin-top: 10px;
       font-size:medium;
   }
+
+  .curr-time {
+      font-weight: bold;
+      font-size: larger;
+  }
