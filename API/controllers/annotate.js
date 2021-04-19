@@ -14,15 +14,13 @@ router.post('/', cors(), async function(req, res) {
    console.log("req.query: ", req.query);
     var data = req.query;
     var annotations = data.annotations;
-
+    
     const Annotation = mongoose.model('Annotation');
     //console.log(annotations);
     
     annotations.forEach(annotation => {
        
         var obj = JSON.parse(annotation);
-
-        //console.log(obj);
         var timestamps = obj.data;
         
         if (obj.data !== []) {
@@ -33,7 +31,7 @@ router.post('/', cors(), async function(req, res) {
 
                 var newDataPoint = {
                     userID: req.session.uid,
-                    videoID: '',
+                    videoID: req.query.videoID,
                     behavior: obj.text,
                     startTime: startTime,
                     endTime: endTime,

@@ -7,7 +7,8 @@ const annotationSchema = new mongoose.Schema({
     behavior: String,
     // Timestamp
     startTime: Number, // decimal
-    endTime: Number // decimal 
+    endTime: Number, // decimal 
+    training: Boolean
   });
 
 

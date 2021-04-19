@@ -11,6 +11,7 @@ var {typeDefs, resolvers} = require('./schema');
 var {MongoClient} = require('mongodb');
 var {OAuth2Client} = require('google-auth-library');
 var jwt = require('jsonwebtoken');
+var fileUpload = require('express-fileupload');
 
 const cors = require('cors');
 app.use(cors())
@@ -49,11 +50,17 @@ app.get("/posting", (req, res) => {
   res.send("good");
 });
 
+
 app.post("/posting", (req, res) => {
   console.log("req.query: ", req.query);
   res.send(req.query);
 });
 
+// Note that this option available for versions 1.0.0 and newer. 
+app.use(fileUpload({
+  useTempFiles : true,
+  tempFileDir : '/tmp/'
+}));
 
 // view engine setup omitted
 app.use(logger('dev'));

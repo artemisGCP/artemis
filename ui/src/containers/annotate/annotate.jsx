@@ -54,9 +54,9 @@ const Annotate = () => {
     ];
 
     const [annotations, setAnnotations] = useState([
-        { "text": "resting", "data": [[[0.6, 6.0], [0.7, 7.0]], [[0.2, 2.0], [0.4, 4.0]]] },
-        { "text": "eating", "data": [[[0.4, 4.0], [0.6, 6.0]]] },
-        { "text": "ETH", "data": [[[0.0, 0.0], [0.2, 2.0]], [[0.7, 7.0], [1.0, 10.0]]] },
+        { "text": "resting", "data": [] },
+        { "text": "eating", "data":[] },
+        { "text": "ETH", "data": [] },
         { "text": "sniffing", "data": [] },
         { "text": "grooming", "data": [] },
         { "text": "hanging", "data": [] },
@@ -65,7 +65,11 @@ const Annotate = () => {
         { "text": "rearing", "data": [] }
     ])
 
+    const [videoIds, setVideoIds] = useState([]);
+
     const [bList, setBList] = useState(false);
+    const [prevAnnotations, setPrevAnnotations] = useState([]);
+    const [prevBehaviors, setPrevBehaviors] = useState([]);
 
     const [hover, setHover] = useState(false);
     const [imgSource, setImgSource] = useState('');
@@ -77,11 +81,50 @@ const Annotate = () => {
 
     const [videoFilePath, setVideoPath] = useState(null);
     const [videoID, setVideoID] = useState(null);
-
     const handleVideoUpload = (event) => {
+        setPrevAnnotations(annotations);
+        setPrevBehaviors(behaviors);
         setVideoPath(URL.createObjectURL(event.target.files[0]));
         // console.log(event.target.files[0].name);
+        console.log("videoFilePath: ", videoFilePath);
         setVideoID(event.target.files[0].name);
+        const name = event.target.files[0].name;
+        console.log("target files: ", event.target.files);
+        console.log("setvideo id: ", event.target.files[0].name);
+        console.log("video id is: " , videoID);
+        console.log("videoIDSSSSS:", videoIds);
+
+        setAnnotations([
+            { "text": "resting", "data": [] },
+            { "text": "eating", "data":[] },
+            { "text": "ETH", "data": [] },
+            { "text": "sniffing", "data": [] },
+            { "text": "grooming", "data": [] },
+            { "text": "hanging", "data": [] },
+            { "text": "walking", "data": [] },
+            { "text": "drinking", "data": [] },
+            { "text": "rearing", "data": [] }
+        ]);
+        setBehaviors([{ "text": "resting", "color": "purple", "img": resting, "key": "1" },
+        { "text": "eating", "color": "red", "img": eating, "key": "2" },
+        { "text": "ETH", "color": "yellow", "img": eathand, "key": "3" },
+        { "text": "sniffing", "color": "green", "img": sniffing, "key": "4" },
+        { "text": "grooming", "color": "blue", "img": grooming, "key": "5" },
+        { "text": "hanging", "color": "orange", "img": hanging, "key": "6" },
+        { "text": "walking", "color": "pink", "img": walking, "key": "7" },
+        { "text": "drinking", "color": "maroon", "img": drinking, "key": "8" },
+        { "text": "rearing", "color": "violet", "img": rearing, "key": "9" }]);
+
+        if (videoIds.includes(event.target.files[0].name)) {
+            if (confirm("This video has already been loaded. Want to re-load your annotations?")) {
+                console.log("Video re-loaded");
+                setAnnotations(prevAnnotations);
+                setBehaviors(prevBehaviors);
+            }
+            else {
+                console.log("new video loaded");
+            }
+        }
 
     };
 
@@ -90,8 +133,8 @@ const Annotate = () => {
     const handleVideoPlayed = (value) => {
         setVideoPlayed(value.played);
         setVideoPlayedSeconds(value.playedSeconds);
-        console.log(value);
-        console.log(videoPlayed, videoPlayedSeconds)
+        console.log("value :", value);
+        console.log("videoPlayed :", videoPlayed, videoPlayedSeconds)
     };
 
     const allKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "q", "w", "e", "r", "a", "s", "d"]
@@ -99,6 +142,11 @@ const Annotate = () => {
     const deleteBehavior = (behavior) => async (event) => {
         console.log("delete behavior");
         // console.log(behavior);
+        if (confirm('Are you sure you want to delete this behavior?')) {
+            // Save it!
+            console.log('Thing was deleted from the behavior list.');
+         
+
         var index = await behaviors.indexOf(behavior);
         // console.log(index);
         await behaviors.splice(index, 1)
@@ -111,6 +159,10 @@ const Annotate = () => {
         await setBehaviors(behaviors);
         await setBList(true);
         await setBList(false);
+    } else {
+        // Do nothing!
+        console.log('Thing was not saved to the database.');
+      }
 
     }
 
@@ -489,7 +541,7 @@ const Annotate = () => {
 
         axios.post(url, {}, config).then(res => {
             console.log('done');
-            console.log(res);
+            console.log("##################: ", res);
             setSaveAnnotate('saved');
         })
 
@@ -512,7 +564,7 @@ const Annotate = () => {
                             ))}
                             <div>total annotated: {totalAnnotation()} %</div>
                         </Popup>
-                        <input type="file" onChange={handleVideoUpload} />
+                        <input type="file" name="videoUpload" onChange={handleVideoUpload} onClick={(e) => setVideoIds(videoIds.concat(e.target.files[0].name))} />
                         {!newBehavior && <button onClick={() => setNewBehavior(!newBehavior)}>Add behavior</button>}
                         {newBehavior &&
                             <div>
@@ -529,11 +581,14 @@ const Annotate = () => {
                                 {/* <button className="annotation-button" style={{ background: behavior.color }}>{behavior.text}</button> */}
                                 <button className="annotation-button">{behavior.text}</button>
                                 <BsFillQuestionCircleFill size={20} onMouseOver={displayImage(behavior)} onMouseOut={displayImage(behavior)} />
-
+                                
                             </div>
                         ))}
+                        
                     </div>
+                    <p><b>Currently annotating: {currKey}</b></p>
                 </div>
+                
 
                 <div className="annotate3" onKeyDown={processKeyDown}>
                     <div className="video" onClick={() => setFocusedBehavior(null)}>
@@ -562,8 +617,9 @@ const Annotate = () => {
 
                             </div>
                         ))}
+                        
                     </div>
-
+                    <p >.</p>
                     <div className="displayimage">
                         {hover && <img src={imgSource} className="hoverImage"></img>}
 
@@ -589,9 +645,11 @@ const Annotate = () => {
                                 </div>
                             </div>
 
-
+                            
                         ))}
+                    
                     </div>
+                    <p>Make sure you save your progress as you go! </p>
                     <div className="save-button" key={v4()}>
                         <button onClick={() => saveAnnotations()}>save</button>
                         {saveAnnotate && <p>{saveAnnotate}</p>}
