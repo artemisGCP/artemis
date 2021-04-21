@@ -282,7 +282,6 @@ const Annotate = () => {
                         // setEndTime([videoPlayed, videoPlayedSeconds]);
                         setCurrKey(behaviors[i].text);
                         setCurrKeyState(true);
-
                     }
                     else {
                         // if currKeyState is true, press the same key to stop, 
@@ -293,7 +292,13 @@ const Annotate = () => {
                             // setEndTime([videoPlayed, videoPlayedSeconds]);
                             setCurrKeyState(false);
                             setCurrKey(null);
-                            annotations[i].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
+                            if (startTime[0] < videoPlayed) {
+                                annotations[i].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
+                            } 
+                            else {
+                                annotations[i].data.push([[videoPlayed, videoPlayedSeconds], startTime]);
+                            }
+                            
 
                             setAnnotations(annotations);
                             console.log(annotations);
@@ -303,7 +308,14 @@ const Annotate = () => {
                             // or press another assigned key to start a new one
                             console.log("not same key press")
                             console.log(videoPlayedSeconds);
-                            annotations[getIndex(currKey)].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
+
+                            if (startTime[0] < videoPlayed) {
+                                annotations[getIndex(currKey)].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
+                            }
+                            else {
+                                annotations[getIndex(currKey)].data.push([[videoPlayed, videoPlayedSeconds], startTime]);
+                            }
+                            
                             setAnnotations(annotations);
                             setCurrKey(behaviors[i].text);
                             setStartTime([videoPlayed, videoPlayedSeconds]);
@@ -321,7 +333,12 @@ const Annotate = () => {
                 if (currKeyState === true) {
                     console.log(videoPlayedSeconds);
                     // setEndTime([videoPlayed, videoPlayedSeconds]);
-                    annotations[getIndex(currKey)].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
+                    if (startTime[0] < videoPlayed) {
+                        annotations[getIndex(currKey)].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
+                    }
+                    else {
+                        annotations[getIndex(currKey)].data.push([[videoPlayed, videoPlayedSeconds], startTime]);
+                    }
                     setAnnotations(annotations);
                     setCurrKeyState(false);
                     setCurrKey(null);
