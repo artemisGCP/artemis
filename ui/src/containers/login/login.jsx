@@ -2,23 +2,23 @@ import React from 'react';
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import { GoogleOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
-import { googleLogin } from '../../components/auth/googleLogin.js';
 import './login.css';
+import GoogleBtn from './GoogleBtn';
 
 const Login = () => {
   // const history = useHistory();
   // const toLogin = () => {
   //   history.push('/annotate');
   // };
-  const goToLogin = () => {
-    const res = () => {
-      history.push('/');
-    };
-    const rej = (e) => {
-      message.error(e);
-    };
-    googleLogin(res, rej);
-  };
+  // const goToLogin = () => {
+  //   const res = () => {
+  //     history.push('/');
+  //   };
+  //   const rej = (e) => {
+  //     message.error(e);
+  //   };
+  //   googleLogin(res, rej);
+  // };
 
   return (
     <div className="login">
@@ -46,10 +46,11 @@ const Login = () => {
             </Button>
           </Form.Item> */}
           <Form.Item name="goToLogin">
-            <Button block onClick={goToLogin}>
+            {/* <Button block>
               <GoogleOutlined />
               Sign-in with google
-            </Button>
+            </Button> */}
+            <GoogleBtn/>
           </Form.Item>
         </Form>
       </div>

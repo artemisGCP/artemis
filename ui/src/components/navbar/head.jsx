@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import { Login } from './login.jsx';
 import './head.css';
+import GoogleBtn from './GoogleBtn';
 
 const Head = () => {
   const history = useHistory();
@@ -45,9 +46,10 @@ const Head = () => {
           <Menu.Item key="privacy" tabIndex="0">Privacy</Menu.Item>
         </Menu>
       </div>
-      <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+      {/* <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
         {Login()}
-      </Menu>
+      </Menu> */}
+      <GoogleBtn/>
     </div>
   );
 };
