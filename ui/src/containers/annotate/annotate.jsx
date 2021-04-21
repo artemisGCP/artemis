@@ -597,7 +597,7 @@ const Annotate = () => {
 
                     }
                     
-
+                    </div>
                 </div>
 
             </div>
