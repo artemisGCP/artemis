@@ -387,12 +387,20 @@ const Annotate = () => {
 
                 let f = false;
                 let g = [];
+                let totalSeg = 0;
                 for (let i = 0; i < d.length - 1; i++) {
                     let color = 'danger';
                     if (!f) {
                         color = 'info';
                     }
-                    g.push({ behavior: behavior.text, key: i, seg: Math.round((d[i + 1] - d[i]) * 100), show: color });
+                    if (i == d.length - 2) {
+                        g.push({ behavior: behavior.text, key: i, seg: 100-totalSeg, show: color });
+
+                    }
+                    else {
+                        g.push({ behavior: behavior.text, key: i, seg: Math.round((d[i + 1] - d[i]) * 100), show: color });
+                        totalSeg += Math.round((d[i + 1] - d[i]) * 100);
+                    }
                     f = !f;
                 }
                 return g;
