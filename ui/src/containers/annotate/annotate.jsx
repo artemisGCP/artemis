@@ -555,7 +555,6 @@ const Annotate = () => {
                     <p >.</p>
                     <div className="displayimage">
                         {hover && <img src={imgSource} className="hoverImage"></img>}
-
                     </div>
 
 
@@ -588,14 +587,14 @@ const Annotate = () => {
 
                     <p>Make sure you save your progress as you go! </p>
 
-                    {getAnnotationLength()>0 &&
+
                         <div className="save-button" key={v4()}>
 
-                        <button onClick={() => saveAnnotations()}>save</button>
-                        {saveAnnotate && <p>{saveAnnotate}</p>}
-                    </div>
+                            <button onClick={() => saveAnnotations()}>save</button>
+                            {saveAnnotate && <p>{saveAnnotate}</p>}
+                        </div>
 
-                    }
+
                     
                     </div>
                 </div>
