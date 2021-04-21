@@ -82,6 +82,7 @@ const Annotate = () => {
     const [videoFilePath, setVideoPath] = useState(null);
     const [videoID, setVideoID] = useState(null);
     const handleVideoUpload = (event) => {
+        setSaveAnnotate('');
         setPrevAnnotations(annotations);
         setPrevBehaviors(behaviors);
         setVideoPath(URL.createObjectURL(event.target.files[0]));
@@ -521,7 +522,7 @@ const Annotate = () => {
     // axios.defaults.baseURL = "http://localhost:8080"
 
     const saveAnnotations = () => {
-        setSaveAnnotate('saving');
+        setSaveAnnotate('saved');
         console.log("saving", saveAnnotate);
 
         const url = "http://localhost:8080/annotate";
