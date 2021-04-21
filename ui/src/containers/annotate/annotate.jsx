@@ -52,7 +52,7 @@ const Annotate = () => {
 
     const [annotations, setAnnotations] = useState([
         { "text": "resting", "data": [] },
-        { "text": "eating", "data":[] },
+        { "text": "eating", "data": [] },
         { "text": "ETH", "data": [] },
         { "text": "sniffing", "data": [] },
         { "text": "grooming", "data": [] },
@@ -89,12 +89,12 @@ const Annotate = () => {
         const name = event.target.files[0].name;
         console.log("target files: ", event.target.files);
         console.log("setvideo id: ", event.target.files[0].name);
-        console.log("video id is: " , videoID);
+        console.log("video id is: ", videoID);
         console.log("videoIDSSSSS:", videoIds);
 
         setAnnotations([
             { "text": "resting", "data": [] },
-            { "text": "eating", "data":[] },
+            { "text": "eating", "data": [] },
             { "text": "ETH", "data": [] },
             { "text": "sniffing", "data": [] },
             { "text": "grooming", "data": [] },
@@ -145,24 +145,24 @@ const Annotate = () => {
         if (confirm('Are you sure you want to delete this behavior?')) {
             // Save it!
             console.log('Thing was deleted from the behavior list.');
-         
 
-        var index = await behaviors.indexOf(behavior);
-        // console.log(index);
-        await behaviors.splice(index, 1)
-        await annotations.splice(index, 1)
-        // console.log(behaviors)
-        for (const i in behaviors) {
-            behaviors[i].key = allKeys[i];
+
+            var index = await behaviors.indexOf(behavior);
+            // console.log(index);
+            await behaviors.splice(index, 1)
+            await annotations.splice(index, 1)
+            // console.log(behaviors)
+            for (const i in behaviors) {
+                behaviors[i].key = allKeys[i];
+            }
+            await setAnnotations(annotations);
+            await setBehaviors(behaviors);
+            await setBList(true);
+            await setBList(false);
+        } else {
+            // Do nothing!
+            console.log('Thing was not saved to the database.');
         }
-        await setAnnotations(annotations);
-        await setBehaviors(behaviors);
-        await setBList(true);
-        await setBList(false);
-    } else {
-        // Do nothing!
-        console.log('Thing was not saved to the database.');
-      }
 
     }
 
@@ -282,7 +282,6 @@ const Annotate = () => {
                         // setEndTime([videoPlayed, videoPlayedSeconds]);
                         setCurrKey(behaviors[i].text);
                         setCurrKeyState(true);
-
                     }
                     else {
                         // if currKeyState is true, press the same key to stop, 
@@ -293,7 +292,13 @@ const Annotate = () => {
                             // setEndTime([videoPlayed, videoPlayedSeconds]);
                             setCurrKeyState(false);
                             setCurrKey(null);
-                            annotations[i].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
+                            if (startTime[0] < videoPlayed) {
+                                annotations[i].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
+                            }
+                            else {
+                                annotations[i].data.push([[videoPlayed, videoPlayedSeconds], startTime]);
+                            }
+
 
                             setAnnotations(annotations);
                             console.log(annotations);
@@ -303,7 +308,14 @@ const Annotate = () => {
                             // or press another assigned key to start a new one
                             console.log("not same key press")
                             console.log(videoPlayedSeconds);
-                            annotations[getIndex(currKey)].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
+
+                            if (startTime[0] < videoPlayed) {
+                                annotations[getIndex(currKey)].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
+                            }
+                            else {
+                                annotations[getIndex(currKey)].data.push([[videoPlayed, videoPlayedSeconds], startTime]);
+                            }
+
                             setAnnotations(annotations);
                             setCurrKey(behaviors[i].text);
                             setStartTime([videoPlayed, videoPlayedSeconds]);
@@ -321,7 +333,12 @@ const Annotate = () => {
                 if (currKeyState === true) {
                     console.log(videoPlayedSeconds);
                     // setEndTime([videoPlayed, videoPlayedSeconds]);
-                    annotations[getIndex(currKey)].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
+                    if (startTime[0] < videoPlayed) {
+                        annotations[getIndex(currKey)].data.push([startTime, [videoPlayed, videoPlayedSeconds]]);
+                    }
+                    else {
+                        annotations[getIndex(currKey)].data.push([[videoPlayed, videoPlayedSeconds], startTime]);
+                    }
                     setAnnotations(annotations);
                     setCurrKeyState(false);
                     setCurrKey(null);
@@ -370,12 +387,20 @@ const Annotate = () => {
 
                 let f = false;
                 let g = [];
+                let totalSeg = 0;
                 for (let i = 0; i < d.length - 1; i++) {
                     let color = 'danger';
                     if (!f) {
                         color = 'info';
                     }
-                    g.push({ behavior: behavior.text, key: i, seg: Math.round((d[i + 1] - d[i]) * 100), show: color });
+                    if (i == d.length - 2) {
+                        g.push({ behavior: behavior.text, key: i, seg: 100 - totalSeg, show: color });
+
+                    }
+                    else {
+                        g.push({ behavior: behavior.text, key: i, seg: Math.round((d[i + 1] - d[i]) * 100), show: color });
+                        totalSeg += Math.round((d[i + 1] - d[i]) * 100);
+                    }
                     f = !f;
                 }
                 return g;
@@ -394,7 +419,7 @@ const Annotate = () => {
             console.log('empty')
         }
         else {
-            
+
             for (const anno of annotations) {
                 if (anno.text === annotation.text) {
                     for (let b of anno.data) {
@@ -483,6 +508,11 @@ const Annotate = () => {
         return i;
     }
 
+    const getMargin = () => {
+        let k = 600 * startTime[0] + 15
+        return `${k}px`;
+    }
+
     return (
         <div>
             <div className="annotate">
@@ -514,14 +544,14 @@ const Annotate = () => {
                                 {/* <button className="annotation-button" style={{ background: behavior.color }}>{behavior.text}</button> */}
                                 <button className="annotation-button">{behavior.text}</button>
                                 <BsFillQuestionCircleFill size={20} onMouseOver={displayImage(behavior)} onMouseOut={displayImage(behavior)} />
-                                
+
                             </div>
                         ))}
-                        
+
                     </div>
                     <p><b>Currently annotating: {currKey}</b></p>
                 </div>
-                
+
 
                 <div className="annotate3" onKeyDown={processKeyDown}>
                     <div className="video" onClick={() => setFocusedBehavior(null)}>
@@ -540,17 +570,24 @@ const Annotate = () => {
                     </div>
                     <div className="annotations1">
                         {annotations.map((behavior) => (
-                            <div className="annotation1" key={behavior.text}>
-                                <ProgressBar>
-                                    {handleAnnotation(behavior).map((d) => (
-                                        <ProgressBar tabIndex="0" onFocus={() => handleBehaviors(d)} variant={d.show} now={d.seg} key={d.key} onChange={value => console.log(value)} />
+                            <div className="annotation4">
+                                <div className="annotation1" key={behavior.text}>
+                                    {/* {currKey==behavior.text && <div style={{ display: "relative", margin: "5px", height: "10px", width: "10px", color: "yellow", zIndex: "100"}}></div>} */}
+                                    <ProgressBar>
+                                        {handleAnnotation(behavior).map((d) => (
+                                            <ProgressBar tabIndex="0" onFocus={() => handleBehaviors(d)} variant={d.show} now={d.seg} key={d.key} onChange={value => console.log(value)} />
 
-                                    ))}
-                                </ProgressBar>
-
+                                        ))}
+                                    </ProgressBar>
+                                </div>
+                                
+                                    <div style={{ margin: "0", height: "4px", width: "600px", padding: "0" }}>
+                                    {currKey == behavior.text && <p style={{ marginLeft: getMargin(), height: "4px", width: "5px", background: "red", padding: "0" }}></p>}
+                                </div>
                             </div>
+
                         ))}
-                        
+
                     </div>
                     <p >.</p>
                     <div className="displayimage">
@@ -559,11 +596,11 @@ const Annotate = () => {
 
 
                 </div>
-                
+
                 <div className="fill" onClick={() => setFocusedBehavior(null)}>
-                
+
                     <div id="progress">
-                    {currTime>0 && <div className="curr-time">Current Time: {currTime}</div>}
+                        {currTime > 0 && <div className="curr-time">Current Time: {currTime}</div>}
                         {annotations.map((annotation) => (
                             <div id="form-value" key={v4()}>
                                 <div >
@@ -580,22 +617,21 @@ const Annotate = () => {
                                 </div>
                             </div>
 
-                            
+
                         ))}
-                    
 
 
-                    <p>Make sure you save your progress as you go! </p>
 
+                        <p>Make sure you save your progress as you go! </p>
 
-                        <div className="save-button" key={v4()}>
+                        {getAnnotationLength() > 0 &&
+                            <div className="save-button" key={v4()}>
 
-                            <button onClick={() => saveAnnotations()}>save</button>
-                            {saveAnnotate && <p>{saveAnnotate}</p>}
-                        </div>
+                                <button onClick={() => saveAnnotations()}>save</button>
+                                {saveAnnotate && <p>{saveAnnotate}</p>}
+                            </div>
 
-
-                    
+                        }
                     </div>
                 </div>
 

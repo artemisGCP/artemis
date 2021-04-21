@@ -54,7 +54,7 @@
 
 .annotation-button {
     width: 100px;
-    height: 30px;
+    height: 34px;
     margin-right: 10px;
     background-color: white;
     margin-top: 3px;
@@ -89,6 +89,8 @@
 
 .annotation1 {
     /* background-color: rgb(184, 171, 171); */
+    /* display: flex; */
+    /* flex-direction: column; */
     width: 600px;
     height: 30px;
     z-index: 10;
@@ -181,4 +183,9 @@ input[type='file'] {
   .curr-time {
       font-weight: bold;
       font-size: larger;
+  }
+
+  .annotation4 {
+      display: flex;
+      flex-direction: column;
   }
