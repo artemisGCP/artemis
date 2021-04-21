@@ -32,7 +32,7 @@
     "reactjs-popup": "^2.0.4"
   },
   "scripts": {
-    "start": "nodemon -w ./server/uiserver.js -w .env ./server/uiserver.js",
+    "start": "nodemon -w ./server/uiserver.js -w .env ./server/uiserver.js ",
     "lint": "eslint . --ext js,jsx --ignore-pattern public",
     "compile": "webpack --mode production",
     "watch": "webpack --watch",

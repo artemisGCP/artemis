@@ -5,7 +5,10 @@ const annotationSchema = new mongoose.Schema({
     userID: String,
     videoID: String,
     behavior: String,
-    timestamp: String
+    // Timestamp
+    startTime: Number, // decimal
+    endTime: Number, // decimal 
+    training: Boolean
   });
 
 

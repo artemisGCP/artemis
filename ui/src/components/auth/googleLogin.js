@@ -19,19 +19,20 @@ const googleLogin = (res, rej) => {
           GoogleUser = GoogleAuth.currentUser.get();
           BasicProfile = GoogleUser.getBasicProfile();
           const token = GoogleUser.getAuthResponse().id_token;
-          axios
-            .get('/api/auth', { params: { token } })
-            .then((e) => {
-              if (e.data.ok) {
-                setName(e.data.name);
-                setIsSignedIn(true);
-              } else {
-                message.error('google auth fail');
-              }
-            })
-            .catch(() => {
-              message.error('google auth fail');
-            });
+          setIsSignedIn(true);
+          // axios
+          //   .get('/api/auth', { params: { token } })
+          //   .then((e) => {
+          //     if (e.data.ok) {
+          //       setName(e.data.name);
+          //       setIsSignedIn(true);
+          //     } else {
+          //       message.error('google auth fail');
+          //     }
+          //   })
+          //   .catch(() => {
+          //     message.error('google auth fail');
+          //   });
         })
         .catch((e) => {
           rej(e);
