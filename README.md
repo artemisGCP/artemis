@@ -9,6 +9,23 @@ A fullstack web interface that utilizes machine learning to estimate mice behavi
 - an interface for initializing, training and testing behavior estimation models
 - a practical method for connecting machine learning models and making predictions on new data
 
+## Getting started
+To get the Node server running locally:<br/>
+<br/>
+1. Clone this repo<br/>
+2. Navigate to `ui` directory:<br/>
+`npm install` to install all required dependencies<br/>
+`npm start` to start the local ui server<br/>
+<br/>
+3. Navigate to `API` directory:<br/>
+`npm install` to install dependencies<br/>
+`npm start` to start the backend server <br/>
+
+## Technologies Used
+- Backend: Express, Node.js, MongoDB, GraphQL
+- Frontend: React.js, HTML
+
+
 ## Main Features
 - User login/logout
 - Load videos
@@ -16,7 +33,6 @@ A fullstack web interface that utilizes machine learning to estimate mice behavi
 - View summary statistics of annotations
 - Save annotations to Database, as 'training' or 'testing' data
 - Collect user feedback
-
 
 ## Design Decisions
 - Authentication (third-party service, Google) for security
@@ -31,21 +47,5 @@ A fullstack web interface that utilizes machine learning to estimate mice behavi
 ## Connection to Client's API
 Client will develop a backend Python API that takes inputs from our web application, performs machine learning on training data, then is able to take testing inputs from our web application to make predictions on the behavior of animals on the user-uploaded videos. When prediction outputs of the Python API is sent back to our backend, we retrieve these results and write to a downloadable CSV file that the users can then download on the 'results' page. 
 
-## Technologies Used
-- Backend: Express, Node.js, MongoDB, GraphQL
-- Frontend: React.js, HTML
-
-## Getting started
-To get the Node server running locally:<br/>
-<br/>
-1. Clone this repo<br/>
-2. Navigate to `ui` directory:<br/>
-`npm install` to install all required dependencies<br/>
-`npm start` to start the local ui server<br/>
-<br/>
-3. Navigate to `API` directory:<br/>
-`npm install` to install dependencies<br/>
-`npm start` to start the backend server <br/>
-
-## Future work
+## Future work:
 Since our final project is a part of our client's funded PhD project that lasts for at least a year, they are still working on developing the Python API and currently this web application is not connected with a behavior estimation model. Once they finish implementing the machine learning model, we plan to connect with it and do further testings. Right now our client is satisfied with this fullstack interface.
