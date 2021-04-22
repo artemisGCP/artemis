@@ -23,7 +23,7 @@ To get the Node server running locally:<br/>
 
 ## Technologies Used
 - Backend: Express, Node.js, MongoDB, GraphQL
-- Frontend: React.js, HTML
+- Frontend: React.js, HTML/CSS
 
 
 ## Main Features
