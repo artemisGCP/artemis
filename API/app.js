@@ -23,8 +23,8 @@ app.use(cors())
 const SESSION_SECRET = 'secret'; // Move this to .env file
 let JWT_SECRET = process.env.JWT_SECRET;
 
-if (!JWT_SECRET) {
-  console.log("Authentication fail: Missing a JWT_SECRET")
+if (!SESSION_SECRET) {
+  console.log("Authentication fail: Missing SECRET")
 }
 
 /*
