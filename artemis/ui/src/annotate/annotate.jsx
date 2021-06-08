@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './annotate.css';
 import { BsFillQuestionCircleFill, BsFillTrashFill } from 'react-icons/bs';
-import resting from '../../assets/resting.jpg';
-import eating from '../../assets/eating.jpg';
-import eathand from '../../assets/eathand.jpg';
-import sniffing from '../../assets/sniffing.jpg';
-import grooming from '../../assets/grooming.jpg';
-import hanging from '../../assets/hanging.jpg';
-import walking from '../../assets/walking.jpg';
-import drinking from '../../assets/drinking.jpg';
-import rearing from '../../assets/rearing.jpg';
+import resting from '../assets/resting.jpg';
+import eating from '../assets/eating.jpg';
+import eathand from '../assets/eathand.jpg';
+import sniffing from '../assets/sniffing.jpg';
+import grooming from '../assets/grooming.jpg';
+import hanging from '../assets/hanging.jpg';
+import walking from '../assets/walking.jpg';
+import drinking from '../assets/drinking.jpg';
+import rearing from '../assets/rearing.jpg';
 
 import ReactPlayer from 'react-player'
 import axios from 'axios';

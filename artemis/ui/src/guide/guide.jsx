@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import img1 from '../../assets/guide-1.png';
-import img2 from '../../assets/guide-2.png';
+import img1 from '../assets/guide-1.png';
+import img2 from '../assets/guide-2.png';
 import './guide.css';
 
 const Guide = () => {

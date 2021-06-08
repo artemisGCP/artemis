@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Menu } from 'antd';
 import { useHistory } from 'react-router-dom';
-import logo from '../../assets/logo.png';
-import { Login } from './login.jsx';
+import logo from '../assets/logo.png';
+import { Login } from '../helpers/login';
 import './head.css';
 import GoogleBtn from './GoogleBtn';
 

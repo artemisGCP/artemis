@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, message, Upload, Spin } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import train from '../../assets/train.jpg';
+import train from '../assets/train.jpg';
 import './train.css';
 import { useHistory } from 'react-router';
 

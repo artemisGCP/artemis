@@ -2,24 +2,13 @@ import React from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import Body from './router.js';
-import Head from '../src/components/navbar/head.jsx';
-import Home from '../src/containers/home/home.jsx';
+import Head from './navbar/head';
+import Home from './home/home.jsx';
 
 import './global.css';
 
-class Page extends React.Component {
-    constructor() {
-      super();
-      this.state = {
-        signedUp: false,
-        email: '',
-        role: '',
-      };
-    }
-  
-  
-    render() {
-      console.log(this.state);
+function Page () {
+    
       return (
         <>
           <Head />
@@ -27,7 +16,7 @@ class Page extends React.Component {
         </>
       )
     }
-  };
+
 
 
 export default withRouter(Page);

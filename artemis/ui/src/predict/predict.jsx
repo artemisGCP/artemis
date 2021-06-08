@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Predict1 from '../../assets/predict.png';
-import Predict2 from '../../assets/predict.svg';
+import Predict1 from '../assets/predict.png';
+import Predict2 from '../assets/predict.svg';
 import { Button, message, Upload, Spin } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';

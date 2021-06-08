@@ -1,5 +1,5 @@
 import React from 'react';
-import csv from '../../assets/csv.png';
+import csv from '../assets/csv.png';
 import { Button } from 'antd';
 import './results.css';
 import { useHistory } from 'react-router';

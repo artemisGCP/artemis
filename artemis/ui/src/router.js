@@ -1,15 +1,15 @@
 import React from 'react';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Home from '../src/containers/home/home.jsx';
-import Contact from '../src/containers/contact/contact.jsx';
-import Annotate from './containers/annotate/annotate.jsx';
-import Guide from './containers/guide/guide.jsx';
-import Train from './containers/train/train.jsx';
-import Predict from './containers/predict/predict.jsx';
-import Results from './containers/results/results.jsx';
-import Login from './containers/login/login.jsx';
-import Privacy from './containers/privacy/privacy.jsx';
+import Home from './home/home.jsx';
+import Contact from './contact/contact.jsx';
+import Annotate from './annotate/annotate';
+import Guide from './guide/guide.jsx';
+import Train from './train/train.jsx';
+import Predict from './predict/predict.jsx';
+import Results from './results/results.jsx';
+
+import Privacy from './privacy/privacy.jsx';
 
 const Body = () => {
   return (
@@ -22,7 +22,7 @@ const Body = () => {
       <Route path="/predict" exact component={Predict} />
       <Route path="/contact" exact component={Contact} />
       <Route path="/results" exact component={Results} />
-      <Route path="/login" exact component={Login} />
+
       <Route path="/privacy" exact component={Privacy} />
     </Switch>
   );

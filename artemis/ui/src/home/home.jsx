@@ -1,12 +1,12 @@
 import React from 'react';
 import Slider from 'react-slick';
-import slider1 from '../../assets/slider-1.jpg';
-import slider2 from '../../assets/slider-2.jpg';
-import slider3 from '../../assets/slider-3.jpg';
-import slider4 from '../../assets/slider-4.jpg';
-import body1 from '../../assets/body-1.jpg';
-import body2 from '../../assets/body-2.jpg';
-import body3 from '../../assets/body-3.jpg';
+import slider1 from '../assets/slider-1.jpg';
+import slider2 from '../assets/slider-2.jpg';
+import slider3 from '../assets/slider-3.jpg';
+import slider4 from '../assets/slider-4.jpg';
+import body1 from '../assets/body-1.jpg';
+import body2 from '../assets/body-2.jpg';
+import body3 from '../assets/body-3.jpg';
 import './home.css';
 
 const Home = () => {
