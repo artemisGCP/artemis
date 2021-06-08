@@ -1,0 +1,29 @@
+##### Custom scalar for user aquire date
+scalar UserAquireDate
+
+"""Initial user info schema"""
+type UserInfo {
+  _id: ID!
+  email: String!
+  fname: String
+  lname: String
+  createdAt: String
+}
+
+input SetUSERINFO {
+  email: String!
+  fname: String
+  lname: String
+  createdAt: String
+}
+
+
+##### Top level declarations
+
+type Query {
+  getUserInfo: [UserInfo!]!
+}
+
+type Mutation {
+  setUserInfo(info: SetUSERINFO!): UserInfo!
+}

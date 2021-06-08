@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  ui:
+    build: 
+      context: ./ui
+      dockerfile: Dockerfile
+    image: artemis-ui
+    stdin_open: true
+    ports: 
+      - "3000:80"
+    networks: 
+      - artemis-app
+
+  api:
+    build: 
+      context: ./api
+      dockerfile: Dockerfile
+    image: artemis-api 
+    ports: 
+      - "8080:8080"
+    networks: 
+      - artemis-app
+    depends_on: 
+      - mongo
+
+  mongo:
+    image: mongo
+    ports: 
+      - "27017:27017"
+    networks: 
+      - artemis-app  
+    volumes:
+      - mongo-data:/data/db
+
+networks:
+  artemis-app:
+    driver: bridge
+volumes: 
+  mongo-data:
+    driver: local
