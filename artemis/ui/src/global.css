@@ -1,4 +1,17 @@
 @import '~antd/dist/antd.css';
 #root {
   padding-top: 50px;
+  
+}
+
+html, body {
+    margin: 0px;
+    padding: 0px;
+    max-width: 100%;
+  
+
+}
+
+* {
+  outline: 1px solid red;
 }

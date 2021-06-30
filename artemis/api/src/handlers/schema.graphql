@@ -1,29 +1,21 @@
-##### Custom scalar for user aquire date
-scalar UserAquireDate
-
-"""Initial user info schema"""
-type UserInfo {
-  _id: ID!
-  email: String!
-  fname: String
-  lname: String
-  createdAt: String
+"""Initial video annotation schema"""
+type VideoAnnotation {
+  _id: ID
+  path: String
+  behavior: String
+  startFrame: Int
+  endFrame: Int
+  training: Boolean
 }
 
-input SetUSERINFO {
-  email: String!
-  fname: String
-  lname: String
-  createdAt: String
-}
+
 
 
 ##### Top level declarations
-
 type Query {
-  getUserInfo: [UserInfo!]!
+  getannotations(videopath: String!): VideoAnnotation
 }
 
 type Mutation {
-  setUserInfo(info: SetUSERINFO!): UserInfo!
+  annotate(videoName: String!): VideoAnnotation
 }

@@ -1,61 +1,98 @@
-.annotate {
+.annotate-container {
     display: flex;
-    /* margin: 100px 50px 0 50px; */
-    z-index: 1;
+    flex-direction: column;
+    padding-top: 20px;
+    width: 100%;
+}
+
+
+.upper-container {
+    height: 500px;
+    display: flex;
     justify-content: center;
-    align-items: center;
-    padding-top: 100px;
+    padding-left: 40px;  
 }
 
-.annotate1 {
+.helper-container {
     display: flex;
-    flex-direction: column;
-    max-width: 400px;
-}
-
-.annotate2 {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-}
-.fileuploads {
-    height: 400px;
-    width: 200px;
-    display: flex;
-    flex-direction: column;
     justify-content: space-evenly;
-    align-items: flex-start;
-    background-color: rgb(136, 117, 117);
-    padding-left: 40px;
-}
-
-.m {
-    flex: 1;
+    width: 200px;
+    flex-direction: column;
+    height: 100%;  
 }
 
 .annotations {
     display: flex;
     flex-direction: column;
-    /* padding: 10px; */
-    /* margin-right: 100px; */
-    justify-content: space-evenly;
-    align-items: stretch;
-    height: auto;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    outline: 3px solid green;
+    height: 100%;
+    width: 100%;
+}
+
+.current-time-visible {
+    visibility: visible;
     width: 200px;
 }
 
-.annotation {
+.current-time-hidden {
+    visibility: hidden;
+    display: none;
+    width: 200px;
+}
+
+.behaviors-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    width: 250px;
+}
+
+.bottom-container {
+    display: flex;
+}
+
+.edit-annotation {
+    overflow-x: scroll;
+    max-width: 75%;
+    height: 150px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    visibility: visible;
+}
+
+.edit-annotation-hidden {
+   display: none;
+   visibility: hidden;
+}
+
+.sidebar-container {
+    display: flex;
     width: 200px;
+    align-items: center;
+}
+
+.ind-annotations-container {
+    display: flex;
+}
+
+.ind-annotations {
+    min-width: 150px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.ind-time {
+    margin-bottom: 5px;
 }
 
 .annotation-button {
     width: 100px;
     height: 34px;
-    margin-right: 10px;
     background-color: white;
     margin-top: 3px;
 }
@@ -64,109 +101,19 @@
 .video {
     display: flex;
     background-color: grey;
-    margin: auto;
     width: 600px;
-    height: 400px;
+    height: 500px;
     justify-content: center;
     align-items: center;
 }
 
-#video-upload {
-    height: 30px;
-    width: 250px;
-}
-
-
-.annotations1 {
-    display: flex;
-    flex-direction: column;
-    margin-right: 100px;
-    justify-content: space-evenly;
-    align-items: stretch;
-    height: auto;
-    width: 200px;
-}
-
-.annotation1 {
-    /* background-color: rgb(184, 171, 171); */
-    /* display: flex; */
-    /* flex-direction: column; */
-    width: 600px;
-    height: 30px;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: 0 15px 0 15px;
-    margin-top: 3px;
-
-}
-
 .hoverImage {
-    /* max-width: 100%;
-    height: auto; */
-    position: relative;
-    top: 100px;
-    left: 0;
-    z-index: 99;
-    width: 400px;
+    position: fixed;
+    width: 200px;
 }
 
 input[type='file'] {
     color: rgba(0, 0, 0, 0)
-  }
-
-
-  .displayimage {
-      position: absolute;
-      z-index: 20;
-      top: 400px;
-  }
-
-  .progress {
-      height: 30px;
-      width: 600px;
-  }
-
-  .bg-show {
-    background-color: red;
-  }
-
-  .bg-none {
-    background-color: rgb(32, 33, 139);
-  }
-
-  .fill {
-      /* display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-direction: column; */
-      flex: 1;
-      height: 700px;
-  }
-
-  #progress {
-    margin-left: 20px;
-    min-width: 240px;
-    overflow: auto;
-    max-height: 630px;;
-  }
-
-  .form-input {
-      margin: 5px;
-      /* background-color: aqua; */
-  }
-
-  label {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    text-align: right;
-    width: 40px;
-    line-height: 26px;
-    margin-bottom: 10px;
-    margin-right: 40px;
-    font-size: 112%;
   }
 
   .save-button {
@@ -180,12 +127,21 @@ input[type='file'] {
       font-size:medium;
   }
 
-  .curr-time {
-      font-weight: bold;
-      font-size: larger;
-  }
+.delete-button {
+    margin: 5px;
+}
 
-  .annotation4 {
-      display: flex;
-      flex-direction: column;
-  }
+.dummy-button {
+    margin: 5px;
+}
+
+.currently-annotating {
+    margin-top: 10px;
+}
+
+.save-warning {
+    margin-top: 5px;
+}
+
+
+
