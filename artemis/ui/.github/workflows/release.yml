@@ -15,7 +15,6 @@ jobs:
      
       - name: Check out Git repository
         uses: actions/checkout@v2
-         - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
@@ -26,6 +25,7 @@ jobs:
         uses: samuelmeuli/action-snapcraft@v1
         # Only install Snapcraft on Ubuntu
         if: startsWith(matrix.os, 'ubuntu')
+         - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
         with:
           # Log in to Snap Store
           snapcraft_token: ${{ secrets.snapcraft_token }}
