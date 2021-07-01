@@ -18,4 +18,4 @@ function Page () {
 
 
 
-export default withRouter(Page);
+export default Page;
