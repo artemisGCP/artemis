@@ -1,7 +1,11 @@
 {
-  "name": "ui",
+  "name": "artemisgcp",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
+  "main": "./public/electron.js",
+  "description": "annotation UI for classification of behaviors in video",
+  "author": "jordan",
   "dependencies": {
     "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.7",
@@ -12,6 +16,7 @@
     "bootstrap": "^4.6.0",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
+    "electron-is-dev": "^1.2.0",
     "express-fileupload": "^1.2.1",
     "http-proxy-middleware": "^0.21.0",
     "morgan": "^1.10.0",
@@ -40,7 +45,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron-dev": "concurrently \"BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-package": "./node_modules/.bin/electron-builder -c.extraMetadata.main=build/electron.js",
+    "preelectron-package": "npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -48,6 +56,13 @@
       "react-app/jest"
     ]
   },
+  "build": {
+   "appId": "com.loyno-mathcs.your-github-name.weatherstation.wotdevice",
+   "files": [ "build/**/*", "node_modules/**/*" ],
+   "directories":{
+ "buildResources": "assets"
+   }
+ },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -59,5 +74,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.0",
+    "cross-env": "^7.0.3",
+    "electron": "^13.1.4",
+    "electron-builder": "^22.11.7",
+    "electron-packager": "^15.2.0",
+    "wait-on": "^6.0.0"
   }
 }
