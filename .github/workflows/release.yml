@@ -5,12 +5,11 @@ jobs:
   build_on_linux:
     runs-on: ubuntu-latest
     steps:
+    working-directory: ./artemis/ui
     - uses: actions/checkout@v2
     - uses: actions/setup-node@master
       with:
         node-version: 14
-        
-        path: "../../package.json"
     - name: install dependencies
       run: npm install
     - name: build
