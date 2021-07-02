@@ -5,7 +5,6 @@ jobs:
   build_on_linux:
     runs-on: ubuntu-latest
     steps:
-    
     - uses: actions/checkout@v2
     - uses: actions/setup-node@master
       with:
@@ -26,7 +25,7 @@ jobs:
       run: npm install
     - name: build
       run: npm run make
-
+      
   build_on_win:
     runs-on: windows-latest
     steps:
